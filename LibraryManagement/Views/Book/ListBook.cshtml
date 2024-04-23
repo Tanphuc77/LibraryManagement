@@ -1,0 +1,120 @@
+﻿@using LibraryManagement.Models
+@using PagedList.Mvc
+@model PagedList.IPagedList<SACH>
+
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Layout/Admin.cshtml";
+    ViewBag.active = 1;
+}
+@Html.Partial("~/Views/Menu/MenuPartial.cshtml")
+<script src="~/assest/js/confirmDelete.js"></script>
+<div class="main">
+
+    <div class="topbar">
+
+        <div class="toggle">
+            <ion-icon name="menu-outline"></ion-icon>
+        </div>
+        @using (Ajax.BeginForm("SearchResultsPartial", "Book", new AjaxOptions { @UpdateTargetId = "SearchAjax", InsertionMode = InsertionMode.Replace }))
+        {
+            <div class="search">
+                <label>
+                    <input type="text" name="keyWork" id="" placeholder="Nhập tên cần tìm...">
+                    <button class="fb-search_btn hm-searchbox-btn" value="Tìm Kiếm" type="submit"><ion-icon name="search-outline"></ion-icon></button>
+                </label>
+            </div>
+        }
+        <div class="user">
+            <span class="name__user" style="color:var(--blue)">
+                <ion-icon name="person-outline"></ion-icon>
+                @if (Session["TaiKhoan"] != null)
+                {
+                    THUTHU thuThu = (THUTHU)Session["TaiKhoan"];
+                    @thuThu.TENTHUTHU
+                }
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <a class="btn__primary" href="@Url.Action("CreateBook", "Book")">Thêm mới</a>
+        </div>
+    </div>
+    <div id="SearchAjax">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>
+                                Tên sách
+                            </th>
+                            <th>
+                                Tác giả
+                            </th>
+                            <th>
+                                Hình ảnh
+                            </th>
+                            <th>
+                                Nhà xuất bản
+                            </th>
+                            <th>
+                                Thể loại
+                            </th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    @{ int stt = 1;}
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="text-align:center">@stt</td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TENSACH)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TACGIA)
+                                </td>
+                                <td>
+                                    <img src="@Url.Content("~/assets/Admin/imgs/Product/"+@item.HINHANH)" alt="Product Image" width=100px />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NHAXUATBAN.TENNHAXUATBAN)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.THELOAI.TENTHELOAI)
+                                </td>
+                                <td>
+                                    <div class="function-cell">
+                                        @Html.ActionLink("Chỉnh sửa", "EditBook", new { id = item.MASACH }, new { @class = "edit-button" }) |
+                                        @Html.ActionLink("Chi tiết", "DetailBook", new { id = item.MASACH }, new { @class = "detail-button" })|
+                                        @Html.ActionLink("Xóa", "DeleteBook", new { id = item.MASACH }, new { @class = "delete-button", onclick = "return confirmDelete();" })
+
+                                    </div>
+                                </td>
+                            </tr>
+                            stt++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <ul class="page">
+            <li class="pagination-item pagination-item--right">
+                @Html.PagedListPager(Model, Page => @Url.Action("ListBook", new { Page = Page }))
+            </li>
+        </ul>
+    </div>
+</div>
+<link href="~/assets/Admin/css/Page.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+

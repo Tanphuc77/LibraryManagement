@@ -1,0 +1,71 @@
+﻿@using LibraryManagement.Models
+@using PagedList.Mvc
+@model PagedList.IPagedList<SACH>
+<div style="flex: 1 1 auto; min-height: 1px; padding: 1.25rem; ">
+    <div class="card-body" style="padding: 0">
+        <div class="table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>
+                            Tên sách
+                        </th>
+                        <th>
+                            Tác giả
+                        </th>
+                        <th>
+                            Hình ảnh
+                        </th>
+                        <th>
+                            Nhà xuất bản
+                        </th>
+                        <th>
+                            Thể loại
+                        </th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                @{ int stt = 1;}
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align:center">@stt</td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TENSACH)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TACGIA)
+                            </td>
+                            <td>
+                                <img src="@Url.Content("~/assets/Admin/imgs/Product/"+@item.HINHANH)" alt="Product Image" width="100px;" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NHAXUATBAN.TENNHAXUATBAN)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.THELOAI.TENTHELOAI)
+                            </td>
+                            <td>
+                                <div class="function-cell">
+                                    @Html.ActionLink("Chỉnh sửa", "EditBook", new { id = item.MASACH }, new { @class = "edit-button" }) |
+                                    @Html.ActionLink("Chi tiết", "DetailBook", new { id = item.MASACH }, new { @class = "detail-button" })|
+                                    @Html.ActionLink("Xóa", "DeleteBook", new { id = item.MASACH }, new { @class = "delete-button", onclick = "return confirmDelete();" })
+
+                                </div>
+                            </td>
+                        </tr>
+                        stt++;
+                    }
+                </tbody>
+            </table>
+        </div>
+        <ul class="page">
+            <li class="pagination-item pagination-item--right">
+                @Html.PagedListPager(Model, Page => @Url.Action("SearchResultsPartial", new { Page = Page }))
+            </li>
+        </ul>
+    </div>
+</div>
+<link href="~/assets/Admin/css/Page.css" rel="stylesheet" />

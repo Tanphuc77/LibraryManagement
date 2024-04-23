@@ -1,0 +1,63 @@
+﻿@model IEnumerable<LibraryManagement.Models.MUONTRA>
+
+@{
+    ViewBag.Title = "NotApprovedBook";
+    Layout = "~/Views/Layout/Admin.cshtml";
+    ViewBag.active = 2;
+}
+@Html.Partial("~/Views/Menu/MenuPartial.cshtml")
+<div class="main">
+    @Html.Partial("~/Views/Search/Topbar.cshtml")
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <tr>
+                    <th>STT</th>
+                    <th>
+                        Tên đọc giả
+                    </th>
+                    <th>
+                        Ngày mượn
+                    </th>
+                    <th>
+                        Tình trạng mượn
+                    </th>
+                    <th>Chức năng</th>
+                </tr>
+                @{
+                    int stt = 1; // Khởi tạo biến đếm
+                }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align:center">@stt</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DOCGIA.HOTEN)
+                        </td>
+                        <td>
+                            @item.NGAYMUON
+                        </td>
+                        <td>
+                            @if (@item.TRANGTHAIMUON == false)
+                            {
+                                <span style="color:red">Chưa duyệt</span>
+                            }
+                            else
+                            {
+                                <span style="color:green">Đã duyệt</span>
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("Duyệt phiếu mượn sách", "DuyetPhieuMuon", new { id = item.MAMUON }, new { @class = "edit-button" })|
+                            @Html.ActionLink("Hủy phiếu mượn ", "HuyPhieuMuon", new { id = item.MAMUON }, new { @class = "delete-button" })
+                        </td>
+                    </tr>
+                    stt++;
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+

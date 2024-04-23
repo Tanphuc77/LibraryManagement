@@ -1,0 +1,49 @@
+﻿﻿@using LibraryManagement.Models
+<div class="header-top">
+    <div class="container">
+        <div class="header-top-nav" style="padding:0">
+            <div class="row">
+                <!-- Begin Header Top Left Area Area -->
+                <div class="col-lg-5 col-md-6">
+                    
+                </div>
+                <div class="col-lg-7 col-md-6">
+                    <div class="header-top-right">
+                        <ul class="user-block list-inline">
+                            @if (Session["TaiKhoan"] != null)
+                            {
+                                DOCGIA user = (DOCGIA)Session["TaiKhoan"];
+                                <li style="display:flex">
+                                    <i class="fa-solid fa-user" style="font-size:14px; margin:6px 5px 0 0" ;></i>
+                                    <ul class="single-top-selector">
+                                        <li class="currency list-inline-item">
+                                            <span style="font-weight:400; font-size:14px;">@user.HOTEN</span>
+                                            <div class="btn-group">
+                                                <button class="dropdown-toggle" style="border:none;background-color:white">
+                                                    <i class="fa fa-caret-down"></i>
+                                                </button>
+                                                <div class="dropdown-menu" style="width:150px">
+                                                    <ul>
+                                                        <li><a href="@Url.Action("MyAccount","Home",new {id = user.ID, tendocgia = user.HOTEN })">Tài Khoản của tôi</a></li>
+                                                        <li><a href="@Url.Action("BorrowBooks","Home",new {id = user.ID })">Các sách đã mượn</a></li>
+                                                        <li><a href="@Url.Action("ChangePassword","Home",new {id = user.ID ,tendocgia = user.HOTEN})">Đổi mật khẩu</a></li>
+                                                        <li>@Html.ActionLink("Đăng xuất", "Logout", "Home")</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                <li><a style="text-decoration:none; font-size:14px" href="@Url.Action("Login","Home")">Đăng nhập</a></li>
+                                <li><a style="text-decoration: none; font-size: 14px" href="@Url.Action("SingUp","Home")">Đăng ký</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

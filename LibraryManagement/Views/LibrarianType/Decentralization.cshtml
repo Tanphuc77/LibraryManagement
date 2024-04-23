@@ -1,0 +1,92 @@
+﻿@using LibraryManagement.Models
+@model LOAITHUTHU
+@{
+    ViewBag.Title = "Decentralization";
+    Layout = "~/Views/Layout/Admin.cshtml";
+    ViewBag.active = 3;
+}
+@{
+    IEnumerable<QUYEN> listRole = (IEnumerable<QUYEN>)ViewBag.ListRole;
+    IEnumerable<THUTHUQUYEN> listMemberRole = (IEnumerable<THUTHUQUYEN>)ViewBag.ListMemberRole;
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+@Html.Partial("~/Views/Menu/MenuPartial.cshtml")
+<div class="main">
+    @Html.Partial("~/Views/Search/Topbar.cshtml")
+    @using (Html.BeginForm())
+    {
+        @Html.Hidden("Id_Member", Model.MALOAI)
+        <div class="checkbox-container">
+            @if (listMemberRole != null)
+            {
+                for (int i = 0; i < listRole.Count(); i++)
+                {
+                    int data = 0;
+                    for (int j = 0; j < listMemberRole.Count(); j++)
+                    {
+                        // kiểm tra quyền với loại thành viên có trùng nhau không
+                        if (listRole.ElementAt(i).MAQUYEN == listMemberRole.ElementAt(j).MAQUYEN)
+                        {
+                            data++;
+                            break;
+                        }
+                    }
+                    if (data != 0)// load ra loại đã được phân quyền
+                    {
+                        <div class="checkbox-item">
+                            <input class="check_click" checked="checked" style="width:20px ; height: 20px" type="checkbox" name="@Url.Content("["+i+"].MAQUYEN")" value="@listRole.ElementAt(i).MAQUYEN" />@listRole.ElementAt(i).TENQUYEN
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="checkbox-item">
+                            <input class="check_click" style="width:20px ; height: 20px" type="checkbox" name="@Url.Content("["+i+"].MAQUYEN")" value="@listRole.ElementAt(i).MAQUYEN" /> @listRole.ElementAt(i).TENQUYEN
+                        </div>
+                    }
+                    data = 0;
+                }
+            }
+            else // chưa có quyền
+            {
+                for (int i = 0; i < listRole.Count(); i++)
+                {
+                    <div class="checkbox-item">
+                        <input class="check_click" style="width:20px ; height: 20px" type="checkbox" name="@Url.Content("["+i+"].MAQUYEN")" value="@listRole.ElementAt(i).MAQUYEN" /> @listRole.ElementAt(i).TENQUYEN
+                    </div>
+                }
+            }
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input style="margin:20px 0 0 20px" type="submit" value="Thực hiện" class="btn btn-primary" />
+            </div>
+        </div>
+    }
+</div>
+@*Duyệt lại checkbox đã được check*@
+<script>
+    $(".check_click").click(function () {
+        var i = 0; // Declare i here to reset it on each click
+        $(".check_click").each(function () {
+            if ($(this).is(':checked')) {
+                $(this).attr("name", "[" + i + "].MAQUYEN");
+                i++;
+            }
+        });
+    });
+</script>
+
+<style>
+    .checkbox-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 0 0 20px;
+    }
+
+    .checkbox-item {
+        flex: 0 0 33.33%; /* Sử dụng flex để các ô checkbox chiếm 1/3 của container */
+        padding: 5px; /* Thêm padding để tạo khoảng cách giữa các ô checkbox */
+    }
+</style>

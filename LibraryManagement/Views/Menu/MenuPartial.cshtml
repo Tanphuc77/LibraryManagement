@@ -1,0 +1,117 @@
+﻿<div class="container">
+    <div class="navigation">
+        <ul>
+            <li>
+                <a href="">
+                    <span class="icon">
+                        <ion-icon name="library-outline"></ion-icon>
+                    </span>
+                    <Span class="title">Quản lý thư viện</Span>
+                </a>
+            </li>
+            <li class="@Html.Raw(ViewBag.active == 1 ? "active":"")">
+                <a href="@Url.Action("ListBook","Book")">
+                    <span class="icon">
+                        <ion-icon name="book-outline"></ion-icon>
+                    </span>
+                    <Span class="title">Quản lý sách</Span>
+                </a>
+            </li>
+            <li class="@Html.Raw(ViewBag.active == 2 ? "active":"")">
+                <a href="@Url.Action("ChuaDuyetSach","Muontra")">
+                    <span class="icon">
+                        <ion-icon name="cloud-download-outline"></ion-icon>
+                    </span>
+                    <Span class="title">Quản lý mượn (chưa duyệt)</Span>
+                </a>
+            </li>
+
+            <li class="@Html.Raw(ViewBag.active == 2.2 ? "active":"")">
+                <a href="@Url.Action("DaDuyetSach","Muontra")">
+                    <span class="icon">
+                        <ion-icon name="cloud-done-outline"></ion-icon>
+                    </span>
+                    <Span class="title">Quản lý mượn (đã duyệt)</Span>
+                </a>
+            </li>
+
+            <li class="@Html.Raw(ViewBag.active == 2.5 ? "active":"")">
+                <a href="@Url.Action("DaTraSach","Muontra")">
+                    <span class="icon">
+                        <ion-icon name="cloud-upload-outline"></ion-icon>
+                    </span>
+                    <Span class="title">Quản lý trả</Span>
+                </a>
+            </li>
+
+            <li class="@Html.Raw(ViewBag.active == 3 ? "active":"")">
+                <a href="@Url.Action("ListLibrarian","Librarian")">
+                    <span class="icon">
+                        <ion-icon name="person-add-outline"></ion-icon>
+                    </span>
+                    <Span class="title">Thủ thư</Span>
+                </a>
+            </li>
+            <li class="@Html.Raw(ViewBag.active == 4 ? "active":"")">
+                <a href="@Url.Action("Statistical","Statistical")">
+                    <span class="icon">
+                        <ion-icon name="bar-chart-outline"></ion-icon>
+                    </span>
+                    <Span class="title">Thống kê</Span>
+                </a>
+            </li>
+            <li class="@Html.Raw(ViewBag.active == 5 ? "active":"")">
+                <a href="@Url.Action("ListBookPublisher","BookPublisher")">
+                    <span class="icon">
+                        <ion-icon name="home-outline"></ion-icon>
+                    </span>
+                    <Span class="title">Nhà xuất bản</Span>
+                </a>
+            </li>
+            <li class="@Html.Raw(ViewBag.active == 6 ? "active":"")">
+                <a href="@Url.Action("ListBookcategory","Bookcategory")">
+                    <span class="icon">
+                        <ion-icon name="file-tray-stacked-outline"></ion-icon>
+                    </span>
+                    <Span class="title">Thể loại</Span>
+                </a>
+            </li>
+            <li class="@Html.Raw(ViewBag.active == 7 ? "active":"")">
+                <a href="@Url.Action("ListUser","User")">
+                    <span class="icon">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </span>
+                    <Span class="title">Đọc giả</Span>
+                </a>
+            </li>
+
+            <li class="@Html.Raw(ViewBag.active == 8 ? "active":"")">
+                <a href="@Url.Action("ListRole","Accessrights")">
+                    <span class="icon">
+                        <ion-icon name="settings-outline"></ion-icon>
+                    </span>
+                    <Span class="title">Quyền</Span>
+                </a>
+            </li>
+
+            <li class="@Html.Raw(ViewBag.active == 9 ? "active":"")">
+                <a href="@Url.Action("ListLibrarian","LibrarianType")">
+                    <span class="icon">
+                        <ion-icon name="key-outline"></ion-icon>
+                    </span>
+                    <Span class="title">Nhóm thủ thư</Span>
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("Logout","Auth")">
+                    <span class="icon">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </span>
+                    <Span class="title">Đăng xuất</Span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>

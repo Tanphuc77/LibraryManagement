@@ -1,0 +1,30 @@
+﻿<div class="header-middle">
+    <div class="container logo-nav">
+        <div class="row align-items-center">
+            <div class="col-lg-3">
+                <div class="logo">
+                    <a href="index.html">
+                        <img width="130px" height="100px" src="~/assets/images/menu/logo/istockphoto-1199555232-170667a.jpg" alt="FB's Logo">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="header-middle-right">
+                    @using (Ajax.BeginForm("SearchResultsPartial", "SearchUser", new AjaxOptions { @UpdateTargetId = "SearchAjax", InsertionMode = InsertionMode.Replace }, new { @class = "hm-searchbox hb-searchbox mt-xs-20" }))
+                    {
+                        <input type="text" name="keyWork" placeholder="Tên sản phẩm cần tìm ..." class="hm-searchbox-input" style="width:620px; border-radius:36px">
+                        <button class="fb-search_btn hm-searchbox-btn" value="Tìm Kiếm" type="submit"><i class="fa fa-search"></i></button>
+                    }
+                    <ul class="hm-menu">
+                        @Html.Action("CartPartial", "Cart")
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*@using (Html.BeginForm("GetSearchKeywords", "SearchUser", FormMethod.Get, new { @class = "hm-searchbox hb-searchbox mt-xs-20" }))
+    {
+        <input type="text" name="keyWork" placeholder="Tên sản phẩm cần tìm ..." class="hm-searchbox-input" style="width:620px; border-radius:36px">
+        <button class="fb-search_btn hm-searchbox-btn" value="Tìm Kiếm" type="submit"><i class="fa fa-search"></i></button>
+    }*@

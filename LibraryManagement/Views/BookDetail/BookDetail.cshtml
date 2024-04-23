@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "BookDetail";
+    Layout = "~/Views/Layout/UserHome.cshtml";
+}
+<header class="header-2 bg-white">
+    @Html.Partial("~/Views/Layout/Header-top-User.cshtml")
+    <div class="header-middle">
+        <div class="container logo-nav">
+            <div class="row align-items-center">
+                <div class="col-lg-3">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img width="130px" height="100px" src="~/assets/images/menu/logo/istockphoto-1199555232-170667a.jpg" alt="FB's Logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="header-middle-right">
+                        @using (Ajax.BeginForm("SearchResultsPartial", "SearchUser", new AjaxOptions { @UpdateTargetId = "SearchAjax", InsertionMode = InsertionMode.Replace }, new { @class = "hm-searchbox hb-searchbox mt-xs-20" }))
+                        {
+                            <input type="text" name="keyWork" placeholder="Tên sản phẩm cần tìm ..." class="hm-searchbox-input" style="width:620px; border-radius:36px">
+                            <button class="fb-search_btn hm-searchbox-btn" value="Tìm Kiếm" type="submit"><i class="fa fa-search"></i></button>
+                        }
+                        @*@using (Html.BeginForm("GetSearchKeywords", "SearchUser", FormMethod.Get, new { @class = "hm-searchbox hb-searchbox mt-xs-20" }))
+                            {
+                                <input type="text" name="keyWork" placeholder="Tên sản phẩm cần tìm ..." class="hm-searchbox-input" style="width:620px; border-radius:36px">
+                                <button class="fb-search_btn hm-searchbox-btn" value="Tìm Kiếm" type="submit"><i class="fa fa-search"></i></button>
+                            }*@
+                        <ul class="hm-menu">
+                            @Html.Action("CartPartial", "Cart")
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Action("Menu", "Home")
+</header>
+<div class="body-wrapper" id="SearchAjax">
+    <div class="product-details-area" style="margin: 30px 0">
+        <div class="container">
+            <div class="pdetails bg-white">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="pdetails-images" style="pointer-events: none;">
+                            <div class="pdetails-largeimages pdetails-imagezoom">
+                                <div class="pdetails-singleimage"
+                                     data-src="~/assets/Admin/imgs/Product/@Model.HINHANH">
+                                    <img width="500px" height="500px" style="margin: 20px 0 20px 0" src="~/assets/Admin/imgs/Product/@Model.HINHANH"
+                                         alt="product image">
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="product-details-view-content mt-20">
+                            <div class="product-info">
+                                <h3 style=" LINE-HEIGHT: 35.2px;">@Model.TENSACH</h3>
+                                <span class="product-details-ref">Lượt xem: @Model.LUOTXEM</span>
+                                <br />
+                                <span class="product-details-ref">Tác giả: @Model.TACGIA</span>
+                                <br />
+                                <span class="product-details-ref">Số lượng tồn: @Model.SOLUONGTON</span>
+                                <div class="footer-widget-social-link footer-widget-social-link-2">
+                                    <span>Share</span>
+                                    <ul class="social-link">
+                                        <li class="facebook">
+                                            <a href="https://www.facebook.com/" data-bs-toggle="tooltip"
+                                               target="_blank" title="Facebook">
+                                                <i class="fa fa-facebook"></i>
+                                            </a>
+                                        </li>
+                                        <li class="twitter">
+                                            <a href="https://twitter.com/" data-bs-toggle="tooltip" target="_blank"
+                                               title="Twitter">
+                                                <i class="fa fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li class="youtube">
+                                            <a href="https://www.youtube.com/" data-bs-toggle="tooltip"
+                                               target="_blank" title="Youtube">
+                                                <i class="fa fa-youtube"></i>
+                                            </a>
+                                        </li>
+                                        <li class="google-plus">
+                                            <a href="https://www.plus.google.com/discover" data-bs-toggle="tooltip"
+                                               target="_blank" title="Google Plus">
+                                                <i class="fa fa-google-plus"></i>
+                                            </a>
+                                        </li>
+                                        <li class="instagram">
+                                            <a href="https://www.instagram.com/" data-bs-toggle="tooltip"
+                                               target="_blank" title="Instagram">
+                                                <i class="fa fa-instagram"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="single-add-to-cart">
+                                    <form action="#" class="cart-quantity mt-0">
+                                        <a style="width:25%;margin:15px 0" href="cart.html" class="fb-btn add-to-cart">Thêm vào giỏ hàng</a>
+                                    </form>
+                                </div>
+
+                                <hr />
+
+                                <div class="product-desc" style="border:none">
+                                    <p>
+                                        <span>
+                                            @Html.Raw(Model.MOTA)
+                                        </span>
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Action("BookRelate", "BookDetail")
+</div>
+@Html.Partial("~/Views/Layout/Footer-User.cshtml")
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>

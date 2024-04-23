@@ -1,0 +1,60 @@
+﻿@model IEnumerable<LibraryManagement.Models.LOAITHUTHU>
+
+@{
+    ViewBag.Title = "ListLibrarian";
+    Layout = "~/Views/Layout/Admin.cshtml";
+    ViewBag.active = 9;
+}
+@Html.Partial("~/Views/Menu/MenuPartial.cshtml")
+<div class="main">
+    @Html.Partial("~/Views/Search/Topbar.cshtml")
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <a class="btn__primary" href="@Url.Action("CreateLibrarianType", "LibrarianType")">Thêm mới</a>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            Mã loại
+                        </th>
+                        <th>
+                            Tên Loại
+                        </th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MALOAI)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TENLOAI)
+                            </td>
+                            <td style=" white-space: nowrap;">
+                                <div class="function-cell">
+                                    @Html.ActionLink("Chỉnh sửa", "UpdateLibrarianType", new { id = item.MALOAI }, new { @class = "edit-button" }) |
+                                    @Html.ActionLink("Xóa", "RemoveLibrarianType", new { id = item.MALOAI }, new { @class = "delete-button", onclick = "return LibrarianDelete();" })|
+                                    @Html.ActionLink("Phân quyền", "Decentralization", new { id = item.MALOAI }, new { @class = "detail-button" })
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function LibrarianDelete() {
+        return confirm('Bạn có chắc chắn muốn nhóm thủ thư này?');
+    }
+</script>

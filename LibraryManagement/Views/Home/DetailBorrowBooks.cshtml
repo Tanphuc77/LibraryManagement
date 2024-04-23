@@ -1,0 +1,41 @@
+﻿@using LibraryManagement.Models
+@model MUONTRA
+@{ ViewBag.Title = "XemGioHang";
+    Layout = "~/Views/Layout/UserHome.cshtml"; }
+@{ IEnumerable<LibraryManagement.Models.CHITIETMUONTRA> DetailBorrowBooks = (IEnumerable<LibraryManagement.Models.CHITIETMUONTRA>)ViewBag.ChiTietMuonSach;}
+<header class="header-2 bg-white">
+    @Html.Partial("~/Views/Layout/Header-top-User.cshtml")
+    @Html.Partial("~/Views/Layout/Header-middle-User.cshtml")
+    @Html.Action("Menu", "Home")
+</header>
+<div class="Shopping-cart-area pt-60 pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="table-content table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="fb-product-thumbnail">Hình <span style="text-transform: lowercase; ">ảnh</span></th>
+                                <th class="cart-product-name">Tên <span style="text-transform: lowercase; ">sách</span></th>
+                                <th class="fb-product-quantity">Số <span style="text-transform: lowercase; ">lượng</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in DetailBorrowBooks)
+                            {
+                                <tr>
+                                    <td class="fb-product-thumbnail" style="width:90px; height:90px;"><img src="@Url.Content("~/assets/Admin/imgs/Product/"+item.SACH.HINHANH)" alt="FB's Product Image" /></td>
+                                    <td class="fb-product-name"><a href="@Url.Action("BookDetail", "BookDetail", new {maTheLoai = item.SACH.MATHELOAI, maNhaXuatBan = item.SACH.MANHAXUATBAN, maSach = item.MASACH, @tensp = item.TENSACH })">@item.TENSACH</a></td>
+                                    <td><span> @item.SOLUONGMUON</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Views/Layout/Footer-User.cshtml")
+

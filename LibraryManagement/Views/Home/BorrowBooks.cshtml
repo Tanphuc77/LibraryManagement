@@ -1,0 +1,73 @@
+﻿@using LibraryManagement.Models
+@model IEnumerable<MUONTRA>
+@{ ViewBag.Title = "Sachdamuon";
+    Layout = "~/Views/Layout/UserHome.cshtml";
+}
+<header class="header-2 bg-white">
+    @Html.Partial("~/Views/Layout/Header-top-User.cshtml")
+    @Html.Partial("~/Views/Layout/Header-middle-User.cshtml")
+    @Html.Action("Menu", "Home")
+</header>
+<div class="Shopping-cart-area pt-60 pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="table-content table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th class="fb-product-thumbnail">Ngày <span style="text-transform: lowercase; ">mượn</span></th>
+                                <th class="cart-product-name">Trạng  <span style="text-transform: lowercase; ">thái mượn</span></th>
+                                <th class="cart-product-name">Trạng  <span style="text-transform: lowercase; ">thái trả</span></th>
+                                <th class="cart-product-name">Chức  <span style="text-transform: lowercase; ">năng</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{  int i = 1;}
+                            @foreach (var item in Model)
+                            {
+                               
+                                <tr>
+                                    <td>@i</td>
+                                    <td class="fb-product-name" style="font-weight: 400;">@item.NGAYMUON</td>
+
+                                    <td class="fb-product-name " style="font-weight: 400;">
+                                        @if (item.TRANGTHAIMUON == true)
+                                        {
+                                            <p style="color: green; font-weight: 400;">Đã duyệt</p>
+                                        }
+                                        else
+                                        {
+                                            <p style="color: red; font-weight: 400;">Chưa duyệt</p>
+                                        }
+                                    </td>
+                                    <td class="fb-product-name cart-name">
+                                        @if (item.TRANGTHAITRA == true)
+                                        {
+                                            <p style="color: green; font-weight: 400;">Đã trả</p>
+                                        }
+                                        else
+                                        {
+                                            <p style="color: red; font-weight: 400;">Chưa trả</p>
+                                        }
+                                    </td>
+                                    <td class="fb-product-name cart-name">
+                                        <a style=" font-weight: 400;" href="@Url.Action("DetailBorrowBooks","Home",new {id = item.MAMUON })">Chi tiết</a>
+                                        @if (item.TRANGTHAIMUON == false)
+                                        {
+                                            <span>|</span>
+                                            <a style=" font-weight: 400;" href="@Url.Action("Cancel","Home",new {id = item.MAMUON })">Hủy</a>
+                                        }
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Views/Layout/Footer-User.cshtml")
