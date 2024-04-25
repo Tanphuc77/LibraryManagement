@@ -161,8 +161,8 @@ namespace LibraryManagement.Controllers
             // Nếu tổng số lượng sách vượt quá 5 cuốn, thông báo và không tiến hành mượn sách
             if (totalBooks > 5)
             {
-                string script = "alert('Xin lỗi, Bạn không được mượn quá 5 cuốn sách.');";
-                return JavaScript(script);
+                TempData["totalBooks"] = "Xin lỗi, Mỗi lần mượn chỉ mượn được 5 quyển.";
+                return RedirectToAction("SeeCart");
             }
 
             // Nếu không vượt quá 5 cuốn sách, tiếp tục quá trình mượn sách
@@ -200,41 +200,31 @@ namespace LibraryManagement.Controllers
             Session["Cart"] = null;
             return RedirectToAction("SeeCart", "Cart");
         }
+        [HttpPost]
+        public ActionResult UpdateCart(int id, FormCollection f)
+        {
+            List<Cart> ListCart = CartTake();
+            Cart cart = ListCart.Find(n => n.MASACH == id);
 
+            SACH check = db.SACHes.SingleOrDefault(m => m.MASACH == id);
 
-        //[HttpGet]
-        //public ActionResult UpdateCard(int ID)
-        //{
-        //    SACH book = db.SACHes.SingleOrDefault(m => m.MASACH == ID);
-        //    if (book == null)
-        //    {
-        //        Response.StatusCode = 404;
-        //        return null;
-        //    }
-        //    List<Cart> listCart = CartTake();
-        //    Cart spCheck = listCart.SingleOrDefault(m => m.MASACH == ID);
-        //    if (spCheck == null)
-        //    {
-        //        return RedirectToAction("SeeCart", "Cart");
-        //    }
-        //    ViewBag.ListCart = listCart;
-        //    return View(spCheck);
-        //}
-        //[HttpPost]
-        //public ActionResult UpdateCard(Cart item)
-        //{
-        //    SACH check = db.SACHes.SingleOrDefault(m => m.MASACH == item.MASACH);
-        //    if (check.SOLUONGTON < item.SOLUONG)
-        //    {
-        //        string script = "alert('Xin lỗi, số lượng tồn không đủ.');";
-        //        return JavaScript(script);
-        //    }
-        //    List<Cart> listcard = CartTake();
-        //    Cart update = listcard.Find(m => m.MASACH == item.MASACH);
+            if (check.SOLUONGTON <= int.Parse(f["quantity"].ToString()))
+            {
+                // Xử lý khi số lượng tồn không đủ
+                TempData["ErrorMessage"] = "Xin lỗi, Hiện tại số lượng mượn của bạn vượt hơn số lượng tồn trong thư viện";
+                return RedirectToAction("SeeCart");
+            }
+            if (cart != null)
+            {
+                cart.SOLUONG = int.Parse(f["quantity"].ToString());
+            }
+            else
+            {
+                // Xử lý khi sách không tồn tại trong giỏ hàng
+                return HttpNotFound();
+            }
+            return RedirectToAction("SeeCart");
+        }
 
-        //    update.SOLUONG = item.SOLUONG;
-
-        //    return RedirectToAction("SeeCart");
-        //}
     }
 }

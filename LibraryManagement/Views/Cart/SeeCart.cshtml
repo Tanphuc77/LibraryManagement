@@ -8,7 +8,7 @@
     @Html.Partial("~/Views/Layout/Header-top-User.cshtml")
     @Html.Partial("~/Views/Layout/Header-middle-User.cshtml")
     @Html.Action("Menu", "Home")
-</header> 
+</header>
 @if (Model.Count() == 0)
 {
     <div class="cart">
@@ -37,7 +37,6 @@ else
                                     <th class="fb-product-thumbnail">Hình <span style="text-transform: lowercase; ">ảnh</span></th>
                                     <th class="cart-product-name">Tên <span style="text-transform: lowercase; ">sách</span></th>
                                     <th class="fb-product-quantity">Số <span style="text-transform: lowercase; ">lượng</span></th>
-                                    @*<th class="fb-product-remove">Chỉnh sửa</th>*@
                                     <th class="fb-product-remove">Xóa</th>
                                 </tr>
                             </thead>
@@ -47,20 +46,18 @@ else
                                     <tr>
                                         <td class="fb-product-thumbnail" style="width:90px; height:90px;"><img src="@Url.Content("~/assets/Admin/imgs/Product/"+item.HINHANH)" alt="FB's Product Image" /></td>
                                         <td class="fb-product-name"><a href="@Url.Action("BookDetail", "BookDetail", new {maTheLoai = item.MATHELOAI, maNhaXuatBan = item.MANHAXUATBAN, maSach = item.MASACH, @tensp = item.TENSACH })">@item.TENSACH</a></td>
-                                        @*<td><span> @item.SOLUONG</span></td>*@
-
-                                        <td class="quantity">
-                                            <div class="cart-plus-minus">
-                                                @Html.TextBox("SOLUONG", item.SOLUONG, new { @class = "cart-plus-minus-box", @readonly = "readonly" })
-                                                <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                                <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                                                <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div><div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                                            </div>
-                                        </td>
-
-                                        @*<td>
-                                                @Html.ActionLink("Chỉnh sửa", "UpdateCard", new { @maSP = item.MASACH })
-                                            </td>*@
+                                        @using (Html.BeginForm("UpdateCart", "Cart", new { id = item.MASACH }))
+                                        {
+                                            <td class="quantity">
+                                                <div class="cart-plus-minus">
+                                                    <input type="text" min="1" name="quantity" value="@item.SOLUONG" class="cart-plus-minus-box" readonly />
+                                                    @*@Html.TextBox("SOLUONG", item.SOLUONG, new { @class = "cart-plus-minus-box", @readonly = "readonly" })*@
+                                                    <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
+                                                    <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                                                </div>
+                                                <input type="submit" value="Cập nhật" />
+                                            </td>
+                                        }
                                         <td class="fb-product-remove">
                                             @Html.ActionLink("x", "RemoveCart", new { @idBook = item.MASACH })
                                         </td>
@@ -77,7 +74,7 @@ else
                                 </ul>
                                 @using (Html.BeginForm("BorrowBooks", "Cart"))
                                 {
-                                    <input class="fb-btn" type="submit" value="Mượn sách" id="btnmuahang" style="margin-top:33px;" />
+                                    <input class="fb-btn" type="submit" value="Mượn sách" style="margin-top:33px;" />
                                 }
                             </div>
                         </div>
@@ -89,3 +86,21 @@ else
 }
 @Html.Partial("~/Views/Layout/Footer-User.cshtml")
 <link href="~/assets/css/Cart.css" rel="stylesheet" />
+<script>
+    $(document).ready(function () {
+        var errorMessage = '@TempData["ErrorMessage"]';
+        if (errorMessage !== '') {
+            alert(errorMessage);
+        }
+    });
+    $(document).ready(function () {
+    var errorMessage = '@TempData["totalBooks"]';
+    if (errorMessage !== '') {
+        alert(errorMessage);
+    }
+});
+</script>
+
+
+
+
