@@ -38,33 +38,34 @@
                                             {
                                                 page++;
                                             }
-                                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                                <div @Url.Content("single-product" + page.ToString())>
-                                                    <div class="product-img">
-                                                        <a href="@Url.Action("BookDetail", "BookDetail", new {maTheLoai = item.MATHELOAI, maNhaXuatBan = item.MANHAXUATBAN, maSach = item.MASACH, @tensp = item.TENSACH })">
-                                                            <img class="primary-img" src="@Url.Content("~/assets/Admin/imgs/Product/"+item.HINHANH)" alt="FB'S Prduct">
-                                                        </a>
-                                                    </div>
-                                                    <div class="product-content">
-                                                        <h5 class="product-name" style="margin-top:20px;"><a href="@Url.Action("BookDetail", "BookDetail", new {maTheLoai = item.MATHELOAI, maNhaXuatBan = item.MANHAXUATBAN, maSach = item.MASACH, @tensp = item.TENSACH })" class="product-name-link">@item.TENSACH</a></h5>
-                                                        <div class="product-action">
-                                                            <ul class="product-action-link">
-                                                                @if (Session["TaiKhoan"] != null)
-                                                                {
-                                                                    <li class="shopping-cart_link"> <a href="">@Ajax.ActionLink(" ", "CreateCartAjax", "Cart", new { @idBook = item.MASACH, @strULR = Request.Url.ToString() }, ajaxOptions: new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "AjaxCart", InsertionMode = InsertionMode.Replace }, htmlAttributes: new { @class = "ion-bag my-icon" })</a> </li>
-                                                                }
-                                                                <li class="single-product_link">
-                                                                    <a href="@Url.Action("BookDetail", "BookDetail", new {maTheLoai = item.MATHELOAI, maNhaXuatBan = item.MANHAXUATBAN, maSach = item.MASACH, @tensp = item.TENSACH })"
-                                                                       title="Single Product">
-                                                                        <i class="ion-link"></i>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-6 single-product page@(page.ToString())">
+
+                                                @*<div @Url.Content("single-product page" + page.ToString())>*@
+                                                <div class="product-img">
+                                                    <a href="@Url.Action("BookDetail", "BookDetail", new {maTheLoai = item.MATHELOAI, maNhaXuatBan = item.MANHAXUATBAN, maSach = item.MASACH, @tensp = item.TENSACH })">
+                                                        <img class="primary-img" src="@Url.Content("~/assets/Admin/imgs/Product/"+item.HINHANH)" alt="FB'S Prduct">
+                                                    </a>
+                                                </div>
+                                                <div class="product-content">
+                                                    <h5 class="product-name" style="margin-top:20px;"><a href="@Url.Action("BookDetail", "BookDetail", new {maTheLoai = item.MATHELOAI, maNhaXuatBan = item.MANHAXUATBAN, maSach = item.MASACH, @tensp = item.TENSACH })" class="product-name-link">@item.TENSACH</a></h5>
+                                                    <div class="product-action">
+                                                        <ul class="product-action-link">
+                                                            @if (Session["TaiKhoan"] != null)
+                                                            {
+                                                                <li class="shopping-cart_link"> <a href="">@Ajax.ActionLink(" ", "CreateCartAjax", "Cart", new { @idBook = item.MASACH, @strULR = Request.Url.ToString() }, ajaxOptions: new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "AjaxCart", InsertionMode = InsertionMode.Replace }, htmlAttributes: new { @class = "ion-bag my-icon" })</a> </li>
+                                                            }
+                                                            <li class="single-product_link">
+                                                                <a href="@Url.Action("BookDetail", "BookDetail", new {maTheLoai = item.MATHELOAI, maNhaXuatBan = item.MANHAXUATBAN, maSach = item.MASACH, @tensp = item.TENSACH })"
+                                                                   title="Single Product">
+                                                                    <i class="ion-link"></i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
                                                     </div>
                                                 </div>
-
                                             </div>
+
+                                            @*</div>*@
                                             count++;
                                         }
                                     </div>
@@ -86,11 +87,17 @@
                                         @*@(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount*@
                                     </li>
 
-                                    <li>
+                                    <li style="display:flex;">
                                         @for (int i = 1; i <= page; i++)
                                         {
-                                            <a class="linkpage" data-quantitypage="@Url.Content("Page"+i)">@i</a>
-                                            @*<li class="" style="float:right">@Html.PagedListPager(Model, Page => @Url.Action("SearchResultsPartial", new { Page = Page, @keyWork = ViewBag.keyWork }))</li>*@
+                                            if (i != page) // Kiểm tra trang hiện tại
+                                            {
+                                                <a class="linkpage current-page" data-quantitypage="@Url.Content("page"+i)">@i</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="linkpage" data-quantitypage="@Url.Content("page"+i)">@i</a>
+                                            }
                                         }
                                     </li>
 
@@ -118,11 +125,26 @@
     .page1 {
         display: block;
     }
+    .pagination-box .current-page {
+        color:red; /* Kiểu chữ đậm */
+    }
 </style>
+
 <script>
     $('.linkpage').click(function () {
+        // Ẩn tất cả các sản phẩm trước khi hiển thị trang mới
         $(".single-product").hide();
-        var quantityPage = $(this).prop("data-quantitypage");
+
+        // Lấy data-quantitypage của số trang được bấm
+        var quantityPage = $(this).attr("data-quantitypage");
+
+        // Hiển thị sản phẩm tương ứng với trang mới
         $("." + quantityPage).show();
+
+        // Loại bỏ kiểu chữ đậm từ tất cả các số trang
+        $('.linkpage').removeClass('current-page');
+
+        // Áp dụng kiểu chữ đậm cho số trang hiện tại
+        $(this).addClass('current-page');
     })
 </script>
