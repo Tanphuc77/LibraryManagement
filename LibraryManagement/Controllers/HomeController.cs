@@ -209,11 +209,11 @@ namespace LibraryManagement.Controllers
         }
         public ActionResult SearchResultsPartial(string keyWork, int? Page)
         {
-            int pageSize = 12;
-            int pageNumber = (Page ?? 1);
+            //int pageSize = 12;
+            //int pageNumber = (Page ?? 1);
             var listBook = db.SACHes.Where(m => m.TENSACH.Contains(keyWork));
             ViewBag.keyWork = keyWork;
-            return PartialView(listBook.OrderBy(m => m.NGAYCAPNHAT).ToPagedList(pageNumber, pageSize));
+            return PartialView(listBook.OrderBy(m => m.NGAYCAPNHAT)/*.ToPagedList(pageNumber, pageSize)*/);
         }
         [HttpGet]
         public ActionResult ChangePassword(int? id, string tendocgia)

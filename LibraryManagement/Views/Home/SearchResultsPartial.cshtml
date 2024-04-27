@@ -1,8 +1,11 @@
 ﻿@using LibraryManagement.Models
-@using PagedList.Mvc
-@model PagedList.IPagedList<SACH>
 @{
     ViewBag.Title = "SearchBook";
+    Layout = "~/Views/Layout/UserHome.cshtml";
+    int count = 0;
+    int quantityBookPage = 9;
+    int page = 1;
+
 }
 <div class="body-wrapper">
     <div class="content-wraper" style="margin-bottom:30px">
@@ -23,18 +26,20 @@
                                         </ul>
                                         <!-- shop-item-filter-list end -->
                                     </div>
-                                    <div class="toolbar-amount">
-                                        <span>Có @Model.Count() Sách</span>
-                                    </div>
                                 </div>
                             </div>
                             <div id="grid-view" class="tab-pane fade active show" role="tabpanel">
+
                                 <div class="fb-product_wrap shop-product-area">
                                     <div class="row">
                                         @foreach (var item in Model)
                                         {
+                                            if (count % quantityBookPage == 0 && count != 0)
+                                            {
+                                                page++;
+                                            }
                                             <div class="col-lg-4 col-md-4 col-sm-6">
-                                                <div class="single-product">
+                                                <div @Url.Content("single-product" + page.ToString())>
                                                     <div class="product-img">
                                                         <a href="@Url.Action("BookDetail", "BookDetail", new {maTheLoai = item.MATHELOAI, maNhaXuatBan = item.MANHAXUATBAN, maSach = item.MASACH, @tensp = item.TENSACH })">
                                                             <img class="primary-img" src="@Url.Content("~/assets/Admin/imgs/Product/"+item.HINHANH)" alt="FB'S Prduct">
@@ -58,10 +63,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
+                                            count++;
                                         }
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -70,14 +78,25 @@
                             <div class="col-lg-8 col-md-6">
                                 <p></p>
                             </div>
+
                             <div class="col-lg-4 col-md-6" style="box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">
                                 <ul class="pagination-box pt-xs-20 pb-xs-15">
                                     <li>
-                                        @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+                                        <span>1/@page</span>
+                                        @*@(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount*@
                                     </li>
-                                    <li class="" style="float:right">@Html.PagedListPager(Model, Page => @Url.Action("SearchResults", new { Page = Page, @keyWork = ViewBag.keyWork }))</li>
+
+                                    <li>
+                                        @for (int i = 1; i <= page; i++)
+                                        {
+                                            <a class="linkpage" data-quantitypage="@Url.Content("Page"+i)">@i</a>
+                                            @*<li class="" style="float:right">@Html.PagedListPager(Model, Page => @Url.Action("SearchResultsPartial", new { Page = Page, @keyWork = ViewBag.keyWork }))</li>*@
+                                        }
+                                    </li>
+
                                 </ul>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -91,5 +110,19 @@
         </div>
     </div>
 </div>
+<style>
+    .single-product {
+        display: none;
+    }
 
-
+    .page1 {
+        display: block;
+    }
+</style>
+<script>
+    $('.linkpage').click(function () {
+        $(".single-product").hide();
+        var quantityPage = $(this).prop("data-quantitypage");
+        $("." + quantityPage).show();
+    })
+</script>
