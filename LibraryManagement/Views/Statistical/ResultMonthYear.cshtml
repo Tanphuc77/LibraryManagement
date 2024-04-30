@@ -1,0 +1,26 @@
+﻿@model IEnumerable<LibraryManagement.Models.BookBorrowing>
+
+<h1>Monthly Borrowing Report</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Book ID</th>
+            <th>Book Title</th>
+            <th>Borrowing Date</th>
+            <th>Total Quantity Borrowed</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MASACH</td>
+                <td>@item.TENSACH</td>
+                <td>@item.NGAYMUON</td>
+                <td>@item.TotalQuantityBorrowed</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

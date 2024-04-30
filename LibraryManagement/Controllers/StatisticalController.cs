@@ -7,10 +7,10 @@ using System.Web.Mvc;
 
 namespace LibraryManagement.Controllers
 {
-    [Authorize(Roles = "QUANLYSACH")]
+    //[Authorize(Roles = "QUANLYSACH")]
     public class StatisticalController : Controller
     {
-        QuanLyThuVienEntities db = new QuanLyThuVienEntities(); 
+        QuanLyThuVienEntities db = new QuanLyThuVienEntities();
         // GET: Statistical
         public ActionResult Statistical()
         {
@@ -40,6 +40,49 @@ namespace LibraryManagement.Controllers
         {
             int thanhVien = db.DOCGIAs.Count();
             return thanhVien;
+        }
+        public ActionResult MonthYear()
+        {
+            return View();
+        }
+
+        public List<BookBorrowing> GetBookBorrowings()
+        {
+            List<BookBorrowing> bookBorrowings = new List<BookBorrowing>();
+
+            using (QuanLyThuVienEntities db = new QuanLyThuVienEntities())
+            {
+                // Truy vấn cơ sở dữ liệu để lấy thông tin về mượn sách và tính tổng số lượng mượn
+                bookBorrowings = (from ct in db.CHITIETMUONTRAs
+                                  group ct by new { ct.MASACH, ct.TENSACH, ct.MUONTRA.NGAYMUON } into g
+                                  select new BookBorrowing
+                                  {
+                                      MASACH = (int)g.Key.MASACH,
+                                      TENSACH = g.Key.TENSACH,
+                                      NGAYMUON = (DateTime)g.Key.NGAYMUON,
+                                      TotalQuantityBorrowed = (int)g.Sum(ct => ct.SOLUONGMUON)
+                                  }).ToList();
+            }
+
+            return bookBorrowings;
+        }
+        public ActionResult ResultMonthYear()
+        {
+            var bookBorrowings = GetBookBorrowings();
+            return View(bookBorrowings);
+            //var monthYear = db.CHITIETMUONTRAs
+            //                .GroupBy(ct => new { ct.MASACH, ct.TENSACH, ct.MUONTRA.NGAYMUON })
+            //                .Select(g => new
+            //                {
+            //                    MASACH = g.Key.MASACH,
+            //                    TENSACH = g.Key.TENSACH,
+            //                    NGAYMUON = g.Key.NGAYMUON,
+            //                    TongSoLuongMuon = g.Sum(ct => ct.SOLUONGMUON)
+            //                })
+            //                .OrderByDescending(g => g.MASACH)
+            //                .ToList();
+            //ViewBag.TongSoLuongMuon = monthYear.Select(b => b.TongSoLuongMuon);
+            //return View(monthYear);
         }
     }
 }
