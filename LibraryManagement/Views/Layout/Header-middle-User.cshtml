@@ -10,7 +10,7 @@
             </div>
             <div class="col-lg-9">
                 <div class="header-middle-right">
-                    @using (Ajax.BeginForm("SearchResultsPartial", "SearchUser", new AjaxOptions { @UpdateTargetId = "SearchAjax", InsertionMode = InsertionMode.Replace }, new { @class = "hm-searchbox hb-searchbox mt-xs-20" }))
+                    @using (Ajax.BeginForm("SearchResultsPartial", "Home", new AjaxOptions { @UpdateTargetId = "SearchAjax", InsertionMode = InsertionMode.Replace }, new { @class = "hm-searchbox hb-searchbox mt-xs-20" }))
                     {
                         <input type="text" name="keyWork" placeholder="Tên sản phẩm cần tìm ..." class="hm-searchbox-input" style="width:620px; border-radius:36px">
                         <button class="fb-search_btn hm-searchbox-btn" value="Tìm Kiếm" type="submit"><i class="fa fa-search"></i></button>

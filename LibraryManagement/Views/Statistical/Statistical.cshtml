@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<LibraryManagement.Models.BookBorrowing>
 @{
     ViewBag.Title = "Statistical";
     Layout = "~/Views/Layout/Admin.cshtml";
@@ -48,5 +48,75 @@
             </div>
         </div>
     </div>
-    @Html.Action("MonthYear","Statistical")
-</div>
+    @using (Ajax.BeginForm("ResultMonthYear", "Statistical", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "table-container", InsertionMode = InsertionMode.Replace }))
+    {
+        @*<form action="@Url.Action("ResultMonthYear", "Statistical")" method="get">*@
+            <select class="statistical-month" name="month">
+                <option value="1">Tháng 1</option>
+                <option value="2">Tháng 2</option>
+                <option value="3">Tháng 3</option>
+                <option value="4">Tháng 4</option>
+                <option value="5">Tháng 5</option>
+                <option value="6">Tháng 6</option>
+                <option value="7">Tháng 7</option>
+                <option value="8">Tháng 8</option>
+                <option value="9">Tháng 9</option>
+                <option value="10">Tháng 10</option>
+                <option value="11">Tháng 11</option>
+                <option value="12">Tháng 12</option>
+            </select>
+            <select class="statistical-year" name="year">
+                <!-- Các option cho các năm, ví dụ từ 2020 đến năm hiện tại -->
+                @for (int i = 2020; i <= DateTime.Now.Year; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+            <button type="submit" class="btn-primary">Thống kê sách mượn</button>
+        @*</form>*@
+    }
+        <div class="card-body" id="table-container">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Mã sách</th>
+                            <th>Tên sách</th>
+                            <th>Ngày mượn</th>
+                            <th>Tổng số mượn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<style>
+    .statistical-month {
+        margin: 0 10px 0 20px;
+        height: 40px;
+        border: 1px solid #999;
+        border-radius: 10px;
+        width: 10%;
+        font-size: 15px;
+    }
+
+    .statistical-year {
+        margin-right: 10px;
+        height: 40px;
+        border: 1px solid #999;
+        border-radius: 10px;
+        width: 10%;
+        font-size: 15px;
+    }
+</style>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>    

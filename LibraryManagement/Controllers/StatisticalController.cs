@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace LibraryManagement.Controllers
 {
-    //[Authorize(Roles = "QUANLYSACH")]
+    [Authorize(Roles = "QUANLYSACH")]
     public class StatisticalController : Controller
     {
         QuanLyThuVienEntities db = new QuanLyThuVienEntities();
@@ -46,43 +46,27 @@ namespace LibraryManagement.Controllers
             return View();
         }
 
-        public List<BookBorrowing> GetBookBorrowings()
+        public ActionResult ResultMonthYear(int month, int year)
         {
-            List<BookBorrowing> bookBorrowings = new List<BookBorrowing>();
-
-            using (QuanLyThuVienEntities db = new QuanLyThuVienEntities())
+            var borrowBooks = db.MUONTRAs.Where(m => m.NGAYMUON.Value.Month == month && m.NGAYMUON.Value.Year == year).ToList();
+            var bookViewModels = new List<BookBorrowing>();
+            foreach (var borrowBook in borrowBooks)
             {
-                // Truy vấn cơ sở dữ liệu để lấy thông tin về mượn sách và tính tổng số lượng mượn
-                bookBorrowings = (from ct in db.CHITIETMUONTRAs
-                                  group ct by new { ct.MASACH, ct.TENSACH, ct.MUONTRA.NGAYMUON } into g
-                                  select new BookBorrowing
-                                  {
-                                      MASACH = (int)g.Key.MASACH,
-                                      TENSACH = g.Key.TENSACH,
-                                      NGAYMUON = (DateTime)g.Key.NGAYMUON,
-                                      TotalQuantityBorrowed = (int)g.Sum(ct => ct.SOLUONGMUON)
-                                  }).ToList();
+                int total = 0;
+                foreach (var detail in borrowBook.CHITIETMUONTRAs)
+                {
+                    total += detail.SOLUONGMUON ?? 0; // Ensure SOLUONGMUON is not null
+                    var bookViewModel = new BookBorrowing
+                    {
+                        MASACH = (int)detail.MASACH,
+                        TENSACH = detail.TENSACH, // Assuming TENSACH is the property for the book name
+                        NGAYMUON = (DateTime)borrowBook.NGAYMUON,
+                        TotalBorrowQuantity = total
+                    };
+                    bookViewModels.Add(bookViewModel);
+                }
             }
-
-            return bookBorrowings;
-        }
-        public ActionResult ResultMonthYear()
-        {
-            var bookBorrowings = GetBookBorrowings();
-            return View(bookBorrowings);
-            //var monthYear = db.CHITIETMUONTRAs
-            //                .GroupBy(ct => new { ct.MASACH, ct.TENSACH, ct.MUONTRA.NGAYMUON })
-            //                .Select(g => new
-            //                {
-            //                    MASACH = g.Key.MASACH,
-            //                    TENSACH = g.Key.TENSACH,
-            //                    NGAYMUON = g.Key.NGAYMUON,
-            //                    TongSoLuongMuon = g.Sum(ct => ct.SOLUONGMUON)
-            //                })
-            //                .OrderByDescending(g => g.MASACH)
-            //                .ToList();
-            //ViewBag.TongSoLuongMuon = monthYear.Select(b => b.TongSoLuongMuon);
-            //return View(monthYear);
+            return View(bookViewModels);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace LibraryManagement.Models
         public string TENSACH { get; set; }
         public DateTime NGAYMUON { get; set; }
         public int TotalQuantityBorrowed { get; set; }
+        public int TotalBorrowQuantity { get; internal set; }
 
         public BookBorrowing()
         {

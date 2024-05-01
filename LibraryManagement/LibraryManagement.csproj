@@ -785,7 +785,6 @@
     <Content Include="Views\Home\SearchResultsPartial.cshtml" />
     <Content Include="Views\BookDetail\SearchResultsPartial.cshtml" />
     <Content Include="Views\Home\ChangePassword.cshtml" />
-    <Content Include="Views\Statistical\MonthYear.cshtml" />
     <Content Include="Views\Statistical\ResultMonthYear.cshtml" />
   </ItemGroup>
   <ItemGroup>
