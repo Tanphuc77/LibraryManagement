@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace LibraryManagement.Controllers
 {
-    [Authorize(Roles = "QUANLYSACH")]
+    //[Authorize(Roles = "QUANLYSACH")]
     public class StatisticalController : Controller
     {
         QuanLyThuVienEntities db = new QuanLyThuVienEntities();
@@ -55,18 +55,23 @@ namespace LibraryManagement.Controllers
                 int total = 0;
                 foreach (var detail in borrowBook.CHITIETMUONTRAs)
                 {
-                    total += detail.SOLUONGMUON ?? 0; // Ensure SOLUONGMUON is not null
+                    total += detail.SOLUONGMUON ?? 0;
                     var bookViewModel = new BookBorrowing
                     {
                         MASACH = (int)detail.MASACH,
-                        TENSACH = detail.TENSACH, // Assuming TENSACH is the property for the book name
+                        TENSACH = detail.TENSACH,
                         NGAYMUON = (DateTime)borrowBook.NGAYMUON,
                         TotalBorrowQuantity = total
                     };
                     bookViewModels.Add(bookViewModel);
                 }
             }
-            return View(bookViewModels);
+
+            // Sắp xếp danh sách theo tổng số lượng mượn giảm dần
+            bookViewModels = bookViewModels.OrderByDescending(x => x.TotalBorrowQuantity).ToList();
+
+            return PartialView(bookViewModels);
         }
+
     }
 }

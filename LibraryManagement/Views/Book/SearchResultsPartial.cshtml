@@ -1,6 +1,5 @@
 ﻿@using LibraryManagement.Models
-@using PagedList.Mvc
-@model PagedList.IPagedList<SACH>
+@model IEnumerable<SACH>
 <div style="flex: 1 1 auto; min-height: 1px; padding: 1.25rem; ">
     <div class="card-body" style="padding: 0">
         <div class="table-responsive">
@@ -61,11 +60,7 @@
                 </tbody>
             </table>
         </div>
-        <ul class="page">
-            <li class="pagination-item pagination-item--right">
-                @Html.PagedListPager(Model, Page => @Url.Action("SearchResultsPartial", new { Page = Page }))
-            </li>
-        </ul>
+        
     </div>
 </div>
 <link href="~/assets/Admin/css/Page.css" rel="stylesheet" />

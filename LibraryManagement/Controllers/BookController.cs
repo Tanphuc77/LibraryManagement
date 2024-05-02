@@ -193,13 +193,11 @@ namespace LibraryManagement.Controllers
             //  true để cho phép xóa
             return true;
         }
-        public ActionResult SearchResultsPartial(string keyWork, int? Page)
+        public ActionResult SearchResultsPartial(string keyWork)
         {
-            int pageSize = 12;
-            int pageNumber = (Page ?? 1);
             var listBook = db.SACHes.Where(m => m.TENSACH.Contains(keyWork));
             ViewBag.keyWork = keyWork;
-            return PartialView(listBook.OrderBy(m => m.NGAYCAPNHAT).ToPagedList(pageNumber, pageSize));
+            return PartialView(listBook.OrderBy(m => m.NGAYCAPNHAT));
         }
     }
 }
