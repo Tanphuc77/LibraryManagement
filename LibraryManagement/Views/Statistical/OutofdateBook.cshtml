@@ -1,0 +1,52 @@
+﻿@model IEnumerable<LibraryManagement.Models.OutofdateBook>
+
+@{
+    ViewBag.Title = "ResultMonthYear";
+    Layout = "~/Views/Layout/Admin.cshtml";
+    ViewBag.active = 4;
+}
+@Html.Partial("~/Views/Menu/MenuPartial.cshtml")
+<div class="main">
+    @Html.Partial("~/Views/Search/Topbar.cshtml")
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Họ và Tên</th>
+                        <th>Lớp</th>
+                        <th>Tên Sách</th>
+                        <th>Số Lượng Mượn</th>
+                        <th>Ngày Mượn</th>
+                        <th>Hạn Trả</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any()) // Kiểm tra xem danh sách có phần tử không
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.HOTEN</td>
+                                <td>@item.TENLOP</td>
+                                <td>@item.TENSACH</td>
+                                <td>@item.SOLUONGMUON</td>
+                                <td>@item.NGAYMUON.ToString("dd/MM/yyyy")</td>
+                                <td>@item.HANTRA.ToString("dd/MM/yyyy")</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            @for (int i = 0; i < 6; i++)
+                            {
+                                <td style="text-align:center">Không có dữ liệu.</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

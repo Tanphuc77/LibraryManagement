@@ -236,6 +236,7 @@
     <Compile Include="Models\NHAXUATBAN.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OutofdateBook.cs" />
     <Compile Include="Models\PHIEUNHAP.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -786,6 +787,9 @@
     <Content Include="Views\BookDetail\SearchResultsPartial.cshtml" />
     <Content Include="Views\Home\ChangePassword.cshtml" />
     <Content Include="Views\Statistical\ResultMonthYear.cshtml" />
+    <Content Include="Views\Statistical\OutofdateBook.cshtml" />
+    <Content Include="Views\Statistical\BorrowBooksMax10.cshtml" />
+    <Content Include="Views\Statistical\ViewBooksMax10.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

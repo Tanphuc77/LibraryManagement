@@ -1,0 +1,91 @@
+﻿@using LibraryManagement.Models
+@model IEnumerable<SACH>
+
+@{
+    ViewBag.Title = "ViewBooksMax10";
+    Layout = "~/Views/Layout/Admin.cshtml";
+    ViewBag.active = 4;
+}
+@Html.Partial("~/Views/Menu/MenuPartial.cshtml")
+<div class="main">
+    <div class="topbar">
+
+        <div class="toggle">
+            <ion-icon name="menu-outline"></ion-icon>
+        </div>
+        <div class="search">
+            <label>
+                <input type="text" name="keyWork" id="" placeholder="Nhập tên cần tìm...">
+                <button class="fb-search_btn hm-searchbox-btn" value="Tìm Kiếm" type="submit"><ion-icon name="search-outline"></ion-icon></button>
+            </label>
+        </div>
+        <div class="user">
+            <span class="name__user" style="color:var(--blue)">
+                <ion-icon name="person-outline"></ion-icon>
+                @if (Session["TaiKhoan"] != null)
+                {
+                    THUTHU thuThu = (THUTHU)Session["TaiKhoan"];
+                    @thuThu.TENTHUTHU
+                }
+            </span>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>
+                            Tên sách
+                        </th>
+                        <th>
+                            Tác giả
+                        </th>
+                        <th>
+                            Hình ảnh
+                        </th>
+                        <th>
+                            Nhà xuất bản
+                        </th>
+                        <th>
+                            Thể loại
+                        </th>
+                        <th>Lượt xem</th>
+                    </tr>
+                </thead>
+                @{ int stt = 1;}
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align:center">@stt</td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TENSACH)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TACGIA)
+                            </td>
+                            <td>
+                                <img src="@Url.Content("~/assets/Admin/imgs/Product/" + item.HINHANH)" alt="Product Image" style="width: 100px;" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NHAXUATBAN.TENNHAXUATBAN)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.THELOAI.TENTHELOAI)
+                            </td>
+                            <td style="text-align:center">
+                                @Html.DisplayFor(modelItem => item.LUOTXEM)
+                            </td>
+                        </tr>
+                        stt++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="~/assest/js/confirmDelete.js"></script>
+
