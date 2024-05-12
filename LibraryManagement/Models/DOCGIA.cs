@@ -14,9 +14,8 @@ namespace LibraryManagement.Models
 
 using System;
     using System.Collections.Generic;
-    
-public partial class DOCGIA
-{
+    public partial class DOCGIA
+    {
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
     public DOCGIA()
@@ -48,10 +47,11 @@ public partial class DOCGIA
     public string USERNAME { get; set; }
 
     public string PASSWORD { get; set; }
+    public string ConfirmPassword { get; set; }
+    public string OldPassword { get; set; }
 
 
-
-    public virtual LOP LOP { get; set; }
+        public virtual LOP LOP { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 

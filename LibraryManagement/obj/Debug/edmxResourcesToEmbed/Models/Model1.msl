@@ -11,18 +11,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PHIEUNHAPs">
-      <EntityTypeMapping TypeName="QuanLyThuVienModel.PHIEUNHAP">
-        <MappingFragment StoreEntitySet="PHIEUNHAP">
-          <ScalarProperty Name="MAPHIEUNHAP" ColumnName="MAPHIEUNHAP" />
-          <ScalarProperty Name="MANHACUNGCAP" ColumnName="MANHACUNGCAP" />
-          <ScalarProperty Name="MASACH" ColumnName="MASACH" />
-          <ScalarProperty Name="NGAYNHAP" ColumnName="NGAYNHAP" />
-          <ScalarProperty Name="SOLUONGNHAP" ColumnName="SOLUONGNHAP" />
-          <ScalarProperty Name="DAXOA" ColumnName="DAXOA" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="SACHes">
       <EntityTypeMapping TypeName="QuanLyThuVienModel.SACH">
         <MappingFragment StoreEntitySet="SACH">
@@ -171,6 +159,26 @@
           <ScalarProperty Name="HANTRA" ColumnName="HANTRA" />
           <ScalarProperty Name="NGAYMUON" ColumnName="NGAYMUON" />
           <ScalarProperty Name="MAMUON" ColumnName="MAMUON" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CHITIETPHIEUNHAPs">
+      <EntityTypeMapping TypeName="QuanLyThuVienModel.CHITIETPHIEUNHAP">
+        <MappingFragment StoreEntitySet="CHITIETPHIEUNHAP">
+          <ScalarProperty Name="SOLUONGNHAP" ColumnName="SOLUONGNHAP" />
+          <ScalarProperty Name="MAPHIEUNHAP" ColumnName="MAPHIEUNHAP" />
+          <ScalarProperty Name="MASACH" ColumnName="MASACH" />
+          <ScalarProperty Name="MACHITIETPN" ColumnName="MACHITIETPN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PHIEUNHAPs">
+      <EntityTypeMapping TypeName="QuanLyThuVienModel.PHIEUNHAP">
+        <MappingFragment StoreEntitySet="PHIEUNHAP">
+          <ScalarProperty Name="DAXOA" ColumnName="DAXOA" />
+          <ScalarProperty Name="NGAYNHAP" ColumnName="NGAYNHAP" />
+          <ScalarProperty Name="MANHACUNGCAP" ColumnName="MANHACUNGCAP" />
+          <ScalarProperty Name="MAPHIEUNHAP" ColumnName="MAPHIEUNHAP" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

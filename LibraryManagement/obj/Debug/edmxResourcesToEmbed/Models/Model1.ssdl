@@ -10,6 +10,15 @@
     <Property Name="TENSACH" Type="nvarchar" MaxLength="500" />
     <Property Name="SOLUONGMUON" Type="int" />
   </EntityType>
+  <EntityType Name="CHITIETPHIEUNHAP">
+    <Key>
+      <PropertyRef Name="MACHITIETPN" />
+    </Key>
+    <Property Name="MACHITIETPN" Type="int" Nullable="false" />
+    <Property Name="MASACH" Type="int" />
+    <Property Name="MAPHIEUNHAP" Type="int" />
+    <Property Name="SOLUONGNHAP" Type="int" />
+  </EntityType>
   <EntityType Name="DOCGIA">
     <Key>
       <PropertyRef Name="ID" />
@@ -81,9 +90,7 @@
     </Key>
     <Property Name="MAPHIEUNHAP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="MANHACUNGCAP" Type="int" />
-    <Property Name="MASACH" Type="int" />
     <Property Name="NGAYNHAP" Type="datetime" />
-    <Property Name="SOLUONGNHAP" Type="nchar" MaxLength="10" />
     <Property Name="DAXOA" Type="bit" />
   </EntityType>
   <EntityType Name="QUYEN">
@@ -183,6 +190,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_CHITIETPHIEUNHAP_PHIEUNHAP">
+    <End Role="PHIEUNHAP" Type="Self.PHIEUNHAP" Multiplicity="0..1" />
+    <End Role="CHITIETPHIEUNHAP" Type="Self.CHITIETPHIEUNHAP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PHIEUNHAP">
+        <PropertyRef Name="MAPHIEUNHAP" />
+      </Principal>
+      <Dependent Role="CHITIETPHIEUNHAP">
+        <PropertyRef Name="MAPHIEUNHAP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CHITIETPHIEUNHAP_SACH">
+    <End Role="SACH" Type="Self.SACH" Multiplicity="0..1" />
+    <End Role="CHITIETPHIEUNHAP" Type="Self.CHITIETPHIEUNHAP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SACH">
+        <PropertyRef Name="MASACH" />
+      </Principal>
+      <Dependent Role="CHITIETPHIEUNHAP">
+        <PropertyRef Name="MASACH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_DOCGIA_LOP">
     <End Role="LOP" Type="Self.LOP" Multiplicity="0..1" />
     <End Role="DOCGIA" Type="Self.DOCGIA" Multiplicity="*" />
@@ -228,18 +259,6 @@
       </Principal>
       <Dependent Role="PHIEUNHAP">
         <PropertyRef Name="MANHACUNGCAP" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PHIEUNHAP_SACH">
-    <End Role="SACH" Type="Self.SACH" Multiplicity="0..1" />
-    <End Role="PHIEUNHAP" Type="Self.PHIEUNHAP" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SACH">
-        <PropertyRef Name="MASACH" />
-      </Principal>
-      <Dependent Role="PHIEUNHAP">
-        <PropertyRef Name="MASACH" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -317,6 +336,7 @@
   </Association>
   <EntityContainer Name="QuanLyThuVienModelStoreContainer">
     <EntitySet Name="CHITIETMUONTRA" EntityType="Self.CHITIETMUONTRA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CHITIETPHIEUNHAP" EntityType="Self.CHITIETPHIEUNHAP" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DOCGIA" EntityType="Self.DOCGIA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LOAITHUTHU" EntityType="Self.LOAITHUTHU" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LOP" EntityType="Self.LOP" Schema="dbo" store:Type="Tables" />
@@ -339,6 +359,14 @@
       <End Role="SACH" EntitySet="SACH" />
       <End Role="CHITIETMUONTRA" EntitySet="CHITIETMUONTRA" />
     </AssociationSet>
+    <AssociationSet Name="FK_CHITIETPHIEUNHAP_PHIEUNHAP" Association="Self.FK_CHITIETPHIEUNHAP_PHIEUNHAP">
+      <End Role="PHIEUNHAP" EntitySet="PHIEUNHAP" />
+      <End Role="CHITIETPHIEUNHAP" EntitySet="CHITIETPHIEUNHAP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CHITIETPHIEUNHAP_SACH" Association="Self.FK_CHITIETPHIEUNHAP_SACH">
+      <End Role="SACH" EntitySet="SACH" />
+      <End Role="CHITIETPHIEUNHAP" EntitySet="CHITIETPHIEUNHAP" />
+    </AssociationSet>
     <AssociationSet Name="FK_DOCGIA_LOP" Association="Self.FK_DOCGIA_LOP">
       <End Role="LOP" EntitySet="LOP" />
       <End Role="DOCGIA" EntitySet="DOCGIA" />
@@ -353,10 +381,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_PHIEUNHAP_NHACUNGCAP" Association="Self.FK_PHIEUNHAP_NHACUNGCAP">
       <End Role="NHACUNGCAP" EntitySet="NHACUNGCAP" />
-      <End Role="PHIEUNHAP" EntitySet="PHIEUNHAP" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PHIEUNHAP_SACH" Association="Self.FK_PHIEUNHAP_SACH">
-      <End Role="SACH" EntitySet="SACH" />
       <End Role="PHIEUNHAP" EntitySet="PHIEUNHAP" />
     </AssociationSet>
     <AssociationSet Name="FK_SACH_NHAXUATBAN1" Association="Self.FK_SACH_NHAXUATBAN1">

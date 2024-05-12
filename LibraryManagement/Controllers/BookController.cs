@@ -205,5 +205,10 @@ namespace LibraryManagement.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public ActionResult ImportBook(PHIEUNHAP model, IEnumerable<CHITIETPHIEUNHAP> listmodel)
+        {
+            return View();
+        }
     }
 }
