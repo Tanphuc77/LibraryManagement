@@ -169,7 +169,7 @@ namespace LibraryManagement.Controllers
             // Nếu không vượt quá 5 cuốn sách, tiếp tục quá trình mượn sách
             DOCGIA User = Session["TaiKhoan"] as DOCGIA;
             MUONTRA borrowBooks = new MUONTRA();
-            borrowBooks.MADOCGIA = User.ID;
+            borrowBooks.ID = User.ID;
             borrowBooks.NGAYMUON = DateTime.Now;
             borrowBooks.TRANGTHAIMUON = false;
             borrowBooks.TRANGTHAITRA = false;

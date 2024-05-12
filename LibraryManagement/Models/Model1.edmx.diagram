@@ -19,20 +19,20 @@
         <AssociationConnector Association="QuanLyThuVienModel.FK_CHITIETMUONTRA_SACH" />
         <EntityTypeShape EntityType="QuanLyThuVienModel.LOP" Width="1.5" PointX="6.125" PointY="12.25" />
         <EntityTypeShape EntityType="QuanLyThuVienModel.VIPHAM" Width="1.5" PointX="10.625" PointY="11" />
-        <EntityTypeShape EntityType="QuanLyThuVienModel.DOCGIA" Width="1.5" PointX="8.375" PointY="11.25" />
-        <EntityTypeShape EntityType="QuanLyThuVienModel.MUONTRA" Width="1.5" PointX="10.625" PointY="6.125" />
-        <AssociationConnector Association="QuanLyThuVienModel.FK_CHITIETMUONTRA_MUONTRA" />
-        <AssociationConnector Association="QuanLyThuVienModel.FK_DOCGIA_LOP" />
-        <AssociationConnector Association="QuanLyThuVienModel.FK_MUONTRA_DOCGIA1" />
-        <AssociationConnector Association="QuanLyThuVienModel.FK_VIPHAM_DOCGIA" />
         <EntityTypeShape EntityType="QuanLyThuVienModel.QUYEN" Width="1.5" PointX="8.375" PointY="8.625" />
-        <EntityTypeShape EntityType="QuanLyThuVienModel.LOAITHUTHU" Width="1.5" PointX="6.125" PointY="0.75" />
-        <EntityTypeShape EntityType="QuanLyThuVienModel.THUTHU" Width="1.5" PointX="8.375" PointY="3.125" />
-        <EntityTypeShape EntityType="QuanLyThuVienModel.THUTHUQUYEN" Width="1.5" PointX="10.625" PointY="5.875" />
+        <EntityTypeShape EntityType="QuanLyThuVienModel.LOAITHUTHU" Width="1.5" PointX="8.625" PointY="0.75" />
+        <EntityTypeShape EntityType="QuanLyThuVienModel.THUTHU" Width="1.5" PointX="10.625" PointY="3.125" />
+        <EntityTypeShape EntityType="QuanLyThuVienModel.THUTHUQUYEN" Width="1.5" PointX="15.875" PointY="4.875" />
         <AssociationConnector Association="QuanLyThuVienModel.FK_THUTHU_LOAITHUTHU" />
         <AssociationConnector Association="QuanLyThuVienModel.FK_THUTHUQUYEN_LOAITHUTHU" />
-        <AssociationConnector Association="QuanLyThuVienModel.FK_MUONTRA_THUTHU" />
         <AssociationConnector Association="QuanLyThuVienModel.FK_THUTHUQUYEN_QUYEN" />
+        <EntityTypeShape EntityType="QuanLyThuVienModel.DOCGIA" Width="1.5" PointX="10.625" PointY="13.875" />
+        <EntityTypeShape EntityType="QuanLyThuVienModel.MUONTRA" Width="1.5" PointX="12.875" PointY="0.875" />
+        <AssociationConnector Association="QuanLyThuVienModel.FK_CHITIETMUONTRA_MUONTRA" />
+        <AssociationConnector Association="QuanLyThuVienModel.FK_DOCGIA_LOP" />
+        <AssociationConnector Association="QuanLyThuVienModel.FK_MUONTRA_DOCGIA" />
+        <AssociationConnector Association="QuanLyThuVienModel.FK_VIPHAM_DOCGIA" />
+        <AssociationConnector Association="QuanLyThuVienModel.FK_MUONTRA_THUTHU" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

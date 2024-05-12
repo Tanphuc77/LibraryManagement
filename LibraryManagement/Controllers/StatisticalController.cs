@@ -82,7 +82,7 @@ namespace LibraryManagement.Controllers
                 // Truy vấn để lấy thông tin về các đọc giả mượn sách quá hạn
                 var query = from muontra in db.MUONTRAs
                             join chitiet in db.CHITIETMUONTRAs on muontra.MAMUON equals chitiet.MAMUON
-                            join docgia in db.DOCGIAs on muontra.MADOCGIA equals docgia.ID
+                            join docgia in db.DOCGIAs on muontra.ID equals docgia.ID
                             join lop in db.LOPs on docgia.MALOP equals lop.MALOP
                             where muontra.HANTRA > DateTime.Now // Lọc ra các đọc giả mượn sách quá hạn
                             select new OutofdateBook

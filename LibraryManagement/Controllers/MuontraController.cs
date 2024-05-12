@@ -12,7 +12,18 @@ namespace LibraryManagement.Controllers
     {
         QuanLyThuVienEntities db = new QuanLyThuVienEntities();
         // GET: Borrowbooks
-        [Authorize(Roles = "QUANLYMUONTRA")]
+        [HttpGet]
+        public ActionResult CreateBorrowbook()
+        {
+            ViewBag.ID = new SelectList(db.DOCGIAs.OrderBy(m => m.HOTEN), "ID", "HOTEN");
+            ViewBag.MATHUTHU = new SelectList(db.THUTHUs.OrderBy(m => m.TENTHUTHU), "MATHUTHU", "TENTHUTHU");
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateBorrowbook(MUONTRA model)
+        {
+            return View();
+        }
         public ActionResult ChuaDuyetSach()
         {
             var notApprovedBook = db.MUONTRAs.Where(m => m.TRANGTHAIMUON == false && m.DAXOA == false).OrderByDescending(m => m.NGAYMUON).ToList();

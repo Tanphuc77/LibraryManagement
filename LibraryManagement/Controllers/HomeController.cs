@@ -160,7 +160,7 @@ namespace LibraryManagement.Controllers
             }
 
             // Lấy sách mà đọc giả mượn
-            var borrowbooks = db.MUONTRAs.Where(s => s.MADOCGIA == user.ID && s.DAXOA == false).OrderByDescending(m=>m.NGAYMUON);
+            var borrowbooks = db.MUONTRAs.Where(s => s.ID == user.ID && s.DAXOA == false).OrderByDescending(m=>m.NGAYMUON);
             return View(borrowbooks);
         }
         public ActionResult DetailBorrowBooks(int? id)
@@ -205,7 +205,7 @@ namespace LibraryManagement.Controllers
             MUONTRA updateBorrowBooks = db.MUONTRAs.SingleOrDefault(m => m.MAMUON == model.MAMUON);
             updateBorrowBooks.DAXOA = true;
             db.SaveChanges();
-            return RedirectToAction("BorrowBooks", new { id = model.MADOCGIA });
+            return RedirectToAction("BorrowBooks", new { id = model.ID });
         }
         public ActionResult SearchResultsPartial(string keyWork, int? Page)
         {

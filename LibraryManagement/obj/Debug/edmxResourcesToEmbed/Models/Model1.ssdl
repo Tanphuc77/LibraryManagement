@@ -51,7 +51,7 @@
     <Property Name="TRANGTHAITRA" Type="bit" />
     <Property Name="DAXOA" Type="bit" />
     <Property Name="GHICHU" Type="nvarchar(max)" />
-    <Property Name="MADOCGIA" Type="int" />
+    <Property Name="ID" Type="int" />
     <Property Name="MATHUTHU" Type="int" />
   </EntityType>
   <EntityType Name="NHACUNGCAP">
@@ -195,7 +195,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_MUONTRA_DOCGIA1">
+  <Association Name="FK_MUONTRA_DOCGIA">
     <End Role="DOCGIA" Type="Self.DOCGIA" Multiplicity="0..1" />
     <End Role="MUONTRA" Type="Self.MUONTRA" Multiplicity="*" />
     <ReferentialConstraint>
@@ -203,7 +203,7 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="MUONTRA">
-        <PropertyRef Name="MADOCGIA" />
+        <PropertyRef Name="ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -343,7 +343,7 @@
       <End Role="LOP" EntitySet="LOP" />
       <End Role="DOCGIA" EntitySet="DOCGIA" />
     </AssociationSet>
-    <AssociationSet Name="FK_MUONTRA_DOCGIA1" Association="Self.FK_MUONTRA_DOCGIA1">
+    <AssociationSet Name="FK_MUONTRA_DOCGIA" Association="Self.FK_MUONTRA_DOCGIA">
       <End Role="DOCGIA" EntitySet="DOCGIA" />
       <End Role="MUONTRA" EntitySet="MUONTRA" />
     </AssociationSet>

@@ -103,38 +103,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="DOCGIAs">
-      <EntityTypeMapping TypeName="QuanLyThuVienModel.DOCGIA">
-        <MappingFragment StoreEntitySet="DOCGIA">
-          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
-          <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
-          <ScalarProperty Name="MALOP" ColumnName="MALOP" />
-          <ScalarProperty Name="TINHTRANG" ColumnName="TINHTRANG" />
-          <ScalarProperty Name="DIENTHOAI" ColumnName="DIENTHOAI" />
-          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
-          <ScalarProperty Name="GIOITINH" ColumnName="GIOITINH" />
-          <ScalarProperty Name="HOTEN" ColumnName="HOTEN" />
-          <ScalarProperty Name="MASINHVIEN" ColumnName="MASINHVIEN" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MUONTRAs">
-      <EntityTypeMapping TypeName="QuanLyThuVienModel.MUONTRA">
-        <MappingFragment StoreEntitySet="MUONTRA">
-          <ScalarProperty Name="MATHUTHU" ColumnName="MATHUTHU" />
-          <ScalarProperty Name="MADOCGIA" ColumnName="MADOCGIA" />
-          <ScalarProperty Name="GHICHU" ColumnName="GHICHU" />
-          <ScalarProperty Name="DAXOA" ColumnName="DAXOA" />
-          <ScalarProperty Name="TRANGTHAITRA" ColumnName="TRANGTHAITRA" />
-          <ScalarProperty Name="TRANGTHAIMUON" ColumnName="TRANGTHAIMUON" />
-          <ScalarProperty Name="NGAYTRATHUCTE" ColumnName="NGAYTRATHUCTE" />
-          <ScalarProperty Name="HANTRA" ColumnName="HANTRA" />
-          <ScalarProperty Name="NGAYMUON" ColumnName="NGAYMUON" />
-          <ScalarProperty Name="MAMUON" ColumnName="MAMUON" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="QUYENs">
       <EntityTypeMapping TypeName="QuanLyThuVienModel.QUYEN">
         <MappingFragment StoreEntitySet="QUYEN">
@@ -171,6 +139,38 @@
           <ScalarProperty Name="GHICHU" ColumnName="GHICHU" />
           <ScalarProperty Name="MAQUYEN" ColumnName="MAQUYEN" />
           <ScalarProperty Name="MALOAI" ColumnName="MALOAI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCGIAs">
+      <EntityTypeMapping TypeName="QuanLyThuVienModel.DOCGIA">
+        <MappingFragment StoreEntitySet="DOCGIA">
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+          <ScalarProperty Name="MALOP" ColumnName="MALOP" />
+          <ScalarProperty Name="TINHTRANG" ColumnName="TINHTRANG" />
+          <ScalarProperty Name="DIENTHOAI" ColumnName="DIENTHOAI" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="GIOITINH" ColumnName="GIOITINH" />
+          <ScalarProperty Name="HOTEN" ColumnName="HOTEN" />
+          <ScalarProperty Name="MASINHVIEN" ColumnName="MASINHVIEN" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MUONTRAs">
+      <EntityTypeMapping TypeName="QuanLyThuVienModel.MUONTRA">
+        <MappingFragment StoreEntitySet="MUONTRA">
+          <ScalarProperty Name="MATHUTHU" ColumnName="MATHUTHU" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GHICHU" ColumnName="GHICHU" />
+          <ScalarProperty Name="DAXOA" ColumnName="DAXOA" />
+          <ScalarProperty Name="TRANGTHAITRA" ColumnName="TRANGTHAITRA" />
+          <ScalarProperty Name="TRANGTHAIMUON" ColumnName="TRANGTHAIMUON" />
+          <ScalarProperty Name="NGAYTRATHUCTE" ColumnName="NGAYTRATHUCTE" />
+          <ScalarProperty Name="HANTRA" ColumnName="HANTRA" />
+          <ScalarProperty Name="NGAYMUON" ColumnName="NGAYMUON" />
+          <ScalarProperty Name="MAMUON" ColumnName="MAMUON" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

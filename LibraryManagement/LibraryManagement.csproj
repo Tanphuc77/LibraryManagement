@@ -790,6 +790,7 @@
     <Content Include="Views\Statistical\OutofdateBook.cshtml" />
     <Content Include="Views\Statistical\BorrowBooksMax10.cshtml" />
     <Content Include="Views\Statistical\ViewBooksMax10.cshtml" />
+    <Content Include="Views\Muontra\CreateBorrowbook.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
