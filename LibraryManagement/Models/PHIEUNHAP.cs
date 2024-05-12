@@ -18,23 +18,30 @@ using System;
 public partial class PHIEUNHAP
 {
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public PHIEUNHAP()
+    {
+
+        this.CHITIETPHIEUNHAPs = new HashSet<CHITIETPHIEUNHAP>();
+
+    }
+
+
     public int MAPHIEUNHAP { get; set; }
 
     public Nullable<int> MANHACUNGCAP { get; set; }
 
-    public Nullable<int> MASACH { get; set; }
-
     public Nullable<System.DateTime> NGAYNHAP { get; set; }
-
-    public string SOLUONGNHAP { get; set; }
 
     public Nullable<bool> DAXOA { get; set; }
 
 
 
-    public virtual NHACUNGCAP NHACUNGCAP { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
-    public virtual SACH SACH { get; set; }
+    public virtual ICollection<CHITIETPHIEUNHAP> CHITIETPHIEUNHAPs { get; set; }
+
+    public virtual NHACUNGCAP NHACUNGCAP { get; set; }
 
 }
 

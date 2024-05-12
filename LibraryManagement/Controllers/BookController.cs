@@ -199,5 +199,11 @@ namespace LibraryManagement.Controllers
             ViewBag.keyWork = keyWork;
             return PartialView(listBook.OrderBy(m => m.NGAYCAPNHAT));
         }
+
+        [HttpGet]
+        public ActionResult ImportBook()
+        {
+            return View();
+        }
     }
 }

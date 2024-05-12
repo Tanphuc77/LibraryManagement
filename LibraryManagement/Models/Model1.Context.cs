@@ -34,8 +34,6 @@ public partial class QuanLyThuVienEntities : DbContext
 
     public virtual DbSet<NHACUNGCAP> NHACUNGCAPs { get; set; }
 
-    public virtual DbSet<PHIEUNHAP> PHIEUNHAPs { get; set; }
-
     public virtual DbSet<SACH> SACHes { get; set; }
 
     public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
@@ -61,6 +59,10 @@ public partial class QuanLyThuVienEntities : DbContext
     public virtual DbSet<DOCGIA> DOCGIAs { get; set; }
 
     public virtual DbSet<MUONTRA> MUONTRAs { get; set; }
+
+    public virtual DbSet<CHITIETPHIEUNHAP> CHITIETPHIEUNHAPs { get; set; }
+
+    public virtual DbSet<PHIEUNHAP> PHIEUNHAPs { get; set; }
 
 }
 

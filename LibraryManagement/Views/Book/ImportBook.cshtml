@@ -1,0 +1,17 @@
+﻿@using LibraryManagement.Models
+@model PHIEUNHAP
+@{
+    ViewBag.Title = "ListBook";
+    Layout = "~/Views/Layout/Admin.cshtml";
+    ViewBag.active = 1;
+}
+@using (Html.BeginForm())
+{
+    for (int i = 0; i < 10; i++)
+    {
+        <input name="@Url.Content("["+i+"].MASACH")" value="@i" />
+
+        <input name="@Url.Content("["+i+"].SOLUONGNHAP")" value="@i" />
+
+    }
+}

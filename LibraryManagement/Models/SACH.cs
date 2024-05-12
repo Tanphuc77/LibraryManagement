@@ -22,9 +22,9 @@ public partial class SACH
     public SACH()
     {
 
-        this.PHIEUNHAPs = new HashSet<PHIEUNHAP>();
-
         this.CHITIETMUONTRAs = new HashSet<CHITIETMUONTRA>();
+
+        this.CHITIETPHIEUNHAPs = new HashSet<CHITIETPHIEUNHAP>();
 
     }
 
@@ -55,10 +55,6 @@ public partial class SACH
 
 
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<PHIEUNHAP> PHIEUNHAPs { get; set; }
-
     public virtual NHAXUATBAN NHAXUATBAN { get; set; }
 
     public virtual THELOAI THELOAI { get; set; }
@@ -66,6 +62,10 @@ public partial class SACH
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<CHITIETMUONTRA> CHITIETMUONTRAs { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<CHITIETPHIEUNHAP> CHITIETPHIEUNHAPs { get; set; }
 
 }
 

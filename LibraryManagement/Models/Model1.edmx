@@ -15,6 +15,15 @@
           <Property Name="TENSACH" Type="nvarchar" MaxLength="500" />
           <Property Name="SOLUONGMUON" Type="int" />
         </EntityType>
+        <EntityType Name="CHITIETPHIEUNHAP">
+          <Key>
+            <PropertyRef Name="MACHITIETPN" />
+          </Key>
+          <Property Name="MACHITIETPN" Type="int" Nullable="false" />
+          <Property Name="MASACH" Type="int" />
+          <Property Name="MAPHIEUNHAP" Type="int" />
+          <Property Name="SOLUONGNHAP" Type="int" />
+        </EntityType>
         <EntityType Name="DOCGIA">
           <Key>
             <PropertyRef Name="ID" />
@@ -86,9 +95,7 @@
           </Key>
           <Property Name="MAPHIEUNHAP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MANHACUNGCAP" Type="int" />
-          <Property Name="MASACH" Type="int" />
           <Property Name="NGAYNHAP" Type="datetime" />
-          <Property Name="SOLUONGNHAP" Type="nchar" MaxLength="10" />
           <Property Name="DAXOA" Type="bit" />
         </EntityType>
         <EntityType Name="QUYEN">
@@ -188,6 +195,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CHITIETPHIEUNHAP_PHIEUNHAP">
+          <End Role="PHIEUNHAP" Type="Self.PHIEUNHAP" Multiplicity="0..1" />
+          <End Role="CHITIETPHIEUNHAP" Type="Self.CHITIETPHIEUNHAP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHIEUNHAP">
+              <PropertyRef Name="MAPHIEUNHAP" />
+            </Principal>
+            <Dependent Role="CHITIETPHIEUNHAP">
+              <PropertyRef Name="MAPHIEUNHAP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CHITIETPHIEUNHAP_SACH">
+          <End Role="SACH" Type="Self.SACH" Multiplicity="0..1" />
+          <End Role="CHITIETPHIEUNHAP" Type="Self.CHITIETPHIEUNHAP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SACH">
+              <PropertyRef Name="MASACH" />
+            </Principal>
+            <Dependent Role="CHITIETPHIEUNHAP">
+              <PropertyRef Name="MASACH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DOCGIA_LOP">
           <End Role="LOP" Type="Self.LOP" Multiplicity="0..1" />
           <End Role="DOCGIA" Type="Self.DOCGIA" Multiplicity="*" />
@@ -233,18 +264,6 @@
             </Principal>
             <Dependent Role="PHIEUNHAP">
               <PropertyRef Name="MANHACUNGCAP" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PHIEUNHAP_SACH">
-          <End Role="SACH" Type="Self.SACH" Multiplicity="0..1" />
-          <End Role="PHIEUNHAP" Type="Self.PHIEUNHAP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SACH">
-              <PropertyRef Name="MASACH" />
-            </Principal>
-            <Dependent Role="PHIEUNHAP">
-              <PropertyRef Name="MASACH" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -322,6 +341,7 @@
         </Association>
         <EntityContainer Name="QuanLyThuVienModelStoreContainer">
           <EntitySet Name="CHITIETMUONTRA" EntityType="Self.CHITIETMUONTRA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CHITIETPHIEUNHAP" EntityType="Self.CHITIETPHIEUNHAP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DOCGIA" EntityType="Self.DOCGIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOAITHUTHU" EntityType="Self.LOAITHUTHU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOP" EntityType="Self.LOP" Schema="dbo" store:Type="Tables" />
@@ -344,6 +364,14 @@
             <End Role="SACH" EntitySet="SACH" />
             <End Role="CHITIETMUONTRA" EntitySet="CHITIETMUONTRA" />
           </AssociationSet>
+          <AssociationSet Name="FK_CHITIETPHIEUNHAP_PHIEUNHAP" Association="Self.FK_CHITIETPHIEUNHAP_PHIEUNHAP">
+            <End Role="PHIEUNHAP" EntitySet="PHIEUNHAP" />
+            <End Role="CHITIETPHIEUNHAP" EntitySet="CHITIETPHIEUNHAP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CHITIETPHIEUNHAP_SACH" Association="Self.FK_CHITIETPHIEUNHAP_SACH">
+            <End Role="SACH" EntitySet="SACH" />
+            <End Role="CHITIETPHIEUNHAP" EntitySet="CHITIETPHIEUNHAP" />
+          </AssociationSet>
           <AssociationSet Name="FK_DOCGIA_LOP" Association="Self.FK_DOCGIA_LOP">
             <End Role="LOP" EntitySet="LOP" />
             <End Role="DOCGIA" EntitySet="DOCGIA" />
@@ -358,10 +386,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_PHIEUNHAP_NHACUNGCAP" Association="Self.FK_PHIEUNHAP_NHACUNGCAP">
             <End Role="NHACUNGCAP" EntitySet="NHACUNGCAP" />
-            <End Role="PHIEUNHAP" EntitySet="PHIEUNHAP" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PHIEUNHAP_SACH" Association="Self.FK_PHIEUNHAP_SACH">
-            <End Role="SACH" EntitySet="SACH" />
             <End Role="PHIEUNHAP" EntitySet="PHIEUNHAP" />
           </AssociationSet>
           <AssociationSet Name="FK_SACH_NHAXUATBAN1" Association="Self.FK_SACH_NHAXUATBAN1">
@@ -401,20 +425,7 @@
           <Property Name="TENNHACUNGCAP" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="DIACHI" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="DIENTHOAI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PHIEUNHAPs" Relationship="Self.FK_PHIEUNHAP_NHACUNGCAP" FromRole="NHACUNGCAP" ToRole="PHIEUNHAP" />
-        </EntityType>
-        <EntityType Name="PHIEUNHAP">
-          <Key>
-            <PropertyRef Name="MAPHIEUNHAP" />
-          </Key>
-          <Property Name="MAPHIEUNHAP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MANHACUNGCAP" Type="Int32" />
-          <Property Name="MASACH" Type="Int32" />
-          <Property Name="NGAYNHAP" Type="DateTime" Precision="3" />
-          <Property Name="SOLUONGNHAP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="DAXOA" Type="Boolean" />
-          <NavigationProperty Name="NHACUNGCAP" Relationship="Self.FK_PHIEUNHAP_NHACUNGCAP" FromRole="PHIEUNHAP" ToRole="NHACUNGCAP" />
-          <NavigationProperty Name="SACH" Relationship="Self.FK_PHIEUNHAP_SACH" FromRole="PHIEUNHAP" ToRole="SACH" />
+          <NavigationProperty Name="PHIEUNHAPs" Relationship="QuanLyThuVienModel.FK_PHIEUNHAP_NHACUNGCAP" FromRole="NHACUNGCAP" ToRole="PHIEUNHAP" />
         </EntityType>
         <EntityType Name="SACH">
           <Key>
@@ -432,10 +443,10 @@
           <Property Name="HINHANH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MANHAXUATBAN" Type="Int32" />
           <Property Name="MATHELOAI" Type="Int32" />
-          <NavigationProperty Name="PHIEUNHAPs" Relationship="Self.FK_PHIEUNHAP_SACH" FromRole="SACH" ToRole="PHIEUNHAP" />
           <NavigationProperty Name="NHAXUATBAN" Relationship="QuanLyThuVienModel.FK_SACH_NHAXUATBAN1" FromRole="SACH" ToRole="NHAXUATBAN" />
           <NavigationProperty Name="THELOAI" Relationship="QuanLyThuVienModel.FK_SACH_THELOAI1" FromRole="SACH" ToRole="THELOAI" />
           <NavigationProperty Name="CHITIETMUONTRAs" Relationship="QuanLyThuVienModel.FK_CHITIETMUONTRA_SACH" FromRole="SACH" ToRole="CHITIETMUONTRA" />
+          <NavigationProperty Name="CHITIETPHIEUNHAPs" Relationship="QuanLyThuVienModel.FK_CHITIETPHIEUNHAP_SACH" FromRole="SACH" ToRole="CHITIETPHIEUNHAP" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -447,43 +458,10 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <Association Name="FK_PHIEUNHAP_NHACUNGCAP">
-          <End Role="NHACUNGCAP" Type="Self.NHACUNGCAP" Multiplicity="0..1" />
-          <End Role="PHIEUNHAP" Type="Self.PHIEUNHAP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NHACUNGCAP">
-              <PropertyRef Name="MANHACUNGCAP" />
-            </Principal>
-            <Dependent Role="PHIEUNHAP">
-              <PropertyRef Name="MANHACUNGCAP" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PHIEUNHAP_SACH">
-          <End Role="SACH" Type="Self.SACH" Multiplicity="0..1" />
-          <End Role="PHIEUNHAP" Type="Self.PHIEUNHAP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SACH">
-              <PropertyRef Name="MASACH" />
-            </Principal>
-            <Dependent Role="PHIEUNHAP">
-              <PropertyRef Name="MASACH" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="QuanLyThuVienEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="NHACUNGCAPs" EntityType="Self.NHACUNGCAP" />
-          <EntitySet Name="PHIEUNHAPs" EntityType="Self.PHIEUNHAP" />
           <EntitySet Name="SACHes" EntityType="Self.SACH" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <AssociationSet Name="FK_PHIEUNHAP_NHACUNGCAP" Association="Self.FK_PHIEUNHAP_NHACUNGCAP">
-            <End Role="NHACUNGCAP" EntitySet="NHACUNGCAPs" />
-            <End Role="PHIEUNHAP" EntitySet="PHIEUNHAPs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PHIEUNHAP_SACH" Association="Self.FK_PHIEUNHAP_SACH">
-            <End Role="SACH" EntitySet="SACHes" />
-            <End Role="PHIEUNHAP" EntitySet="PHIEUNHAPs" />
-          </AssociationSet>
           <EntitySet Name="NHAXUATBANs" EntityType="QuanLyThuVienModel.NHAXUATBAN" />
           <EntitySet Name="THELOAIs" EntityType="QuanLyThuVienModel.THELOAI" />
           <AssociationSet Name="FK_SACH_NHAXUATBAN1" Association="QuanLyThuVienModel.FK_SACH_NHAXUATBAN1">
@@ -538,6 +516,20 @@
           <AssociationSet Name="FK_MUONTRA_THUTHU" Association="QuanLyThuVienModel.FK_MUONTRA_THUTHU">
             <End Role="THUTHU" EntitySet="THUTHUs" />
             <End Role="MUONTRA" EntitySet="MUONTRAs" />
+          </AssociationSet>
+          <EntitySet Name="CHITIETPHIEUNHAPs" EntityType="QuanLyThuVienModel.CHITIETPHIEUNHAP" />
+          <EntitySet Name="PHIEUNHAPs" EntityType="QuanLyThuVienModel.PHIEUNHAP" />
+          <AssociationSet Name="FK_CHITIETPHIEUNHAP_PHIEUNHAP" Association="QuanLyThuVienModel.FK_CHITIETPHIEUNHAP_PHIEUNHAP">
+            <End Role="PHIEUNHAP" EntitySet="PHIEUNHAPs" />
+            <End Role="CHITIETPHIEUNHAP" EntitySet="CHITIETPHIEUNHAPs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CHITIETPHIEUNHAP_SACH" Association="QuanLyThuVienModel.FK_CHITIETPHIEUNHAP_SACH">
+            <End Role="SACH" EntitySet="SACHes" />
+            <End Role="CHITIETPHIEUNHAP" EntitySet="CHITIETPHIEUNHAPs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PHIEUNHAP_NHACUNGCAP" Association="QuanLyThuVienModel.FK_PHIEUNHAP_NHACUNGCAP">
+            <End Role="NHACUNGCAP" EntitySet="NHACUNGCAPs" />
+            <End Role="PHIEUNHAP" EntitySet="PHIEUNHAPs" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="NHAXUATBAN">
@@ -803,6 +795,64 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CHITIETPHIEUNHAP">
+          <Key>
+            <PropertyRef Name="MACHITIETPN" />
+          </Key>
+          <Property Name="MACHITIETPN" Type="Int32" Nullable="false" />
+          <Property Name="MASACH" Type="Int32" />
+          <Property Name="MAPHIEUNHAP" Type="Int32" />
+          <Property Name="SOLUONGNHAP" Type="Int32" />
+          <NavigationProperty Name="PHIEUNHAP" Relationship="QuanLyThuVienModel.FK_CHITIETPHIEUNHAP_PHIEUNHAP" FromRole="CHITIETPHIEUNHAP" ToRole="PHIEUNHAP" />
+          <NavigationProperty Name="SACH" Relationship="QuanLyThuVienModel.FK_CHITIETPHIEUNHAP_SACH" FromRole="CHITIETPHIEUNHAP" ToRole="SACH" />
+        </EntityType>
+        <EntityType Name="PHIEUNHAP">
+          <Key>
+            <PropertyRef Name="MAPHIEUNHAP" />
+          </Key>
+          <Property Name="MAPHIEUNHAP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MANHACUNGCAP" Type="Int32" />
+          <Property Name="NGAYNHAP" Type="DateTime" Precision="3" />
+          <Property Name="DAXOA" Type="Boolean" />
+          <NavigationProperty Name="CHITIETPHIEUNHAPs" Relationship="QuanLyThuVienModel.FK_CHITIETPHIEUNHAP_PHIEUNHAP" FromRole="PHIEUNHAP" ToRole="CHITIETPHIEUNHAP" />
+          <NavigationProperty Name="NHACUNGCAP" Relationship="QuanLyThuVienModel.FK_PHIEUNHAP_NHACUNGCAP" FromRole="PHIEUNHAP" ToRole="NHACUNGCAP" />
+        </EntityType>
+        <Association Name="FK_CHITIETPHIEUNHAP_PHIEUNHAP">
+          <End Type="QuanLyThuVienModel.PHIEUNHAP" Role="PHIEUNHAP" Multiplicity="0..1" />
+          <End Type="QuanLyThuVienModel.CHITIETPHIEUNHAP" Role="CHITIETPHIEUNHAP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHIEUNHAP">
+              <PropertyRef Name="MAPHIEUNHAP" />
+            </Principal>
+            <Dependent Role="CHITIETPHIEUNHAP">
+              <PropertyRef Name="MAPHIEUNHAP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CHITIETPHIEUNHAP_SACH">
+          <End Type="QuanLyThuVienModel.SACH" Role="SACH" Multiplicity="0..1" />
+          <End Type="QuanLyThuVienModel.CHITIETPHIEUNHAP" Role="CHITIETPHIEUNHAP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SACH">
+              <PropertyRef Name="MASACH" />
+            </Principal>
+            <Dependent Role="CHITIETPHIEUNHAP">
+              <PropertyRef Name="MASACH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PHIEUNHAP_NHACUNGCAP">
+          <End Type="QuanLyThuVienModel.NHACUNGCAP" Role="NHACUNGCAP" Multiplicity="0..1" />
+          <End Type="QuanLyThuVienModel.PHIEUNHAP" Role="PHIEUNHAP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHACUNGCAP">
+              <PropertyRef Name="MANHACUNGCAP" />
+            </Principal>
+            <Dependent Role="PHIEUNHAP">
+              <PropertyRef Name="MANHACUNGCAP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -816,18 +866,6 @@
                 <ScalarProperty Name="TENNHACUNGCAP" ColumnName="TENNHACUNGCAP" />
                 <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
                 <ScalarProperty Name="DIENTHOAI" ColumnName="DIENTHOAI" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PHIEUNHAPs">
-            <EntityTypeMapping TypeName="QuanLyThuVienModel.PHIEUNHAP">
-              <MappingFragment StoreEntitySet="PHIEUNHAP">
-                <ScalarProperty Name="MAPHIEUNHAP" ColumnName="MAPHIEUNHAP" />
-                <ScalarProperty Name="MANHACUNGCAP" ColumnName="MANHACUNGCAP" />
-                <ScalarProperty Name="MASACH" ColumnName="MASACH" />
-                <ScalarProperty Name="NGAYNHAP" ColumnName="NGAYNHAP" />
-                <ScalarProperty Name="SOLUONGNHAP" ColumnName="SOLUONGNHAP" />
-                <ScalarProperty Name="DAXOA" ColumnName="DAXOA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -979,6 +1017,26 @@
                 <ScalarProperty Name="HANTRA" ColumnName="HANTRA" />
                 <ScalarProperty Name="NGAYMUON" ColumnName="NGAYMUON" />
                 <ScalarProperty Name="MAMUON" ColumnName="MAMUON" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHITIETPHIEUNHAPs">
+            <EntityTypeMapping TypeName="QuanLyThuVienModel.CHITIETPHIEUNHAP">
+              <MappingFragment StoreEntitySet="CHITIETPHIEUNHAP">
+                <ScalarProperty Name="SOLUONGNHAP" ColumnName="SOLUONGNHAP" />
+                <ScalarProperty Name="MAPHIEUNHAP" ColumnName="MAPHIEUNHAP" />
+                <ScalarProperty Name="MASACH" ColumnName="MASACH" />
+                <ScalarProperty Name="MACHITIETPN" ColumnName="MACHITIETPN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PHIEUNHAPs">
+            <EntityTypeMapping TypeName="QuanLyThuVienModel.PHIEUNHAP">
+              <MappingFragment StoreEntitySet="PHIEUNHAP">
+                <ScalarProperty Name="DAXOA" ColumnName="DAXOA" />
+                <ScalarProperty Name="NGAYNHAP" ColumnName="NGAYNHAP" />
+                <ScalarProperty Name="MANHACUNGCAP" ColumnName="MANHACUNGCAP" />
+                <ScalarProperty Name="MAPHIEUNHAP" ColumnName="MAPHIEUNHAP" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
