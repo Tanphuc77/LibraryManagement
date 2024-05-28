@@ -199,16 +199,5 @@ namespace LibraryManagement.Controllers
             ViewBag.keyWork = keyWork;
             return PartialView(listBook.OrderBy(m => m.NGAYCAPNHAT));
         }
-
-        [HttpGet]
-        public ActionResult ImportBook()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult ImportBook(PHIEUNHAP model, IEnumerable<CHITIETPHIEUNHAP> listmodel)
-        {
-            return View();
-        }
     }
 }
