@@ -114,6 +114,11 @@ namespace LibraryManagement.Controllers
             var ViewBooks = db.SACHes.OrderByDescending(m => m.LUOTXEM).Take(10);
             return View(ViewBooks);
         }
+        public ActionResult OutOfStockBooks10()
+        {
+            var viewBooks = db.SACHes.OrderBy(m => m.SOLUONGTON).Take(10).ToList();
 
+            return View(viewBooks);
+        }
     }
 }
