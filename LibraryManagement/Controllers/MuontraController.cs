@@ -42,6 +42,16 @@ namespace LibraryManagement.Controllers
                 return HttpNotFound();
             }
 
+            THUTHU loggedInLibrarian = (THUTHU)Session["TaiKhoan"];
+            if (loggedInLibrarian != null)
+            {
+                muonTra.MATHUTHU = loggedInLibrarian.MATHUTHU;
+            }
+            else
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized);
+            }
+
             // Hiển thị chi tiết phiếu lên view
             var listChiTietMuonSach = db.CHITIETMUONTRAs.Where(m => m.MAMUON == id);
             ViewBag.ChiTietMuonSach = listChiTietMuonSach;
@@ -55,7 +65,13 @@ namespace LibraryManagement.Controllers
             MUONTRA updatePhieuMuon = db.MUONTRAs.SingleOrDefault(m => m.MAMUON == model.MAMUON);
             updatePhieuMuon.TRANGTHAIMUON = model.TRANGTHAIMUON;
             updatePhieuMuon.HANTRA = model.HANTRA;
+            updatePhieuMuon.MATHUTHU = model.MATHUTHU;
 
+            if (updatePhieuMuon.HANTRA == null)
+            {
+                string script = "alert('Xin lỗi, ngày trả không được để trống.');";
+                return JavaScript(script);
+            }
             var listChiTietMuonSach = db.CHITIETMUONTRAs.Where(m => m.MAMUON == model.MAMUON);
             ViewBag.ChiTietMuonSach = listChiTietMuonSach;
             // Duyệt qua từng chi tiết mượn sách để cập nhật số lượng tồn của sách
@@ -68,8 +84,6 @@ namespace LibraryManagement.Controllers
                     book.SOLUONGTON -= item.SOLUONGMUON;
                 }
             }
-            THUTHU librarian = db.THUTHUs.SingleOrDefault(m => m.MATHUTHU == model.MATHUTHU);
-            updatePhieuMuon.MATHUTHU = model.MATHUTHU;
             db.SaveChanges();
             return RedirectToAction("ChuaDuyetSach");
         }
@@ -135,6 +149,12 @@ namespace LibraryManagement.Controllers
             updatePhieuMuon.NGAYTRATHUCTE = model.NGAYTRATHUCTE;
             updatePhieuMuon.TRANGTHAITRA = model.TRANGTHAITRA;
 
+            if (updatePhieuMuon.NGAYTRATHUCTE == null)
+            {
+                string script = "alert('Xin lỗi, ngày trả không được để trống.');";
+                return JavaScript(script);
+            }
+
             var listChiTietMuonSach = db.CHITIETMUONTRAs.Where(m => m.MAMUON == model.MAMUON);
             ViewBag.ChiTietMuonSach = listChiTietMuonSach;
             foreach (var item in listChiTietMuonSach)
@@ -171,6 +191,10 @@ namespace LibraryManagement.Controllers
             ViewBag.ChiTietMuonSach = listChiTietMuonSach;
 
             return View(muonTra);
+        }
+        public ActionResult BorrowBooksDirectly()
+        {
+            return View();
         }
     }
 }

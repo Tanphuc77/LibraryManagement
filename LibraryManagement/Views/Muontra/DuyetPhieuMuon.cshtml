@@ -14,65 +14,67 @@
     {
         @Html.AntiForgeryToken()
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.MAMUON)
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0">
-                        <thead>
-                        </thead>
-                        <tbody>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.MAMUON)
+        @Html.HiddenFor(model => model.MATHUTHU)
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Tên đọc giả:
+                                @Model.DOCGIA.HOTEN
+                            </td>
+                            <td>
+                                Ngày mượn sách:
+                                @Model.NGAYMUON
+                            </td>
+                            <td>
+                                Tình trạng cho phép mượn sách:
+                                <div class="form-group" style="margin-top:5px">
+                                    @Html.EditorFor(model => model.TRANGTHAIMUON)
+                                </div>
+                            </td>
+                            <td>
+                                Ngày trả:
+                                <div class="form-group" style="margin-top:5px">
+                                    @Html.TextBoxFor(model => model.HANTRA, new { @class = "form-control", @type = "date" })
+                                </div>
+                            </td>
+                        </tr>
+                        @foreach (var item in chiTietMuonTra)
+                        {
                             <tr>
                                 <td>
-                                    Tên đọc giả:
-                                    @Model.DOCGIA.HOTEN
+                                    Tên sách:
+                                    @item.TENSACH
                                 </td>
                                 <td>
-                                    Ngày mượn sách:
-                                    @Model.NGAYMUON
+                                    Số lượng mượn:
+                                    @item.SOLUONGMUON
+                                </td>
+                                <td style="display:flex;justify-content:center;align-items:center;">
+                                    <img width="100" src="@Url.Content("~/assets/Admin/imgs/Product/"+item.SACH.HINHANH)" />
                                 </td>
                                 <td>
-                                    Tình trạng cho phép mượn sách:
-                                    <div class="form-group" style="margin-top:5px">
-                                        @Html.EditorFor(model => model.TRANGTHAIMUON)
-                                    </div>
-                                </td>
-                                <td>
-                                    Ngày trả:
-                                    <div class="form-group" style="margin-top:5px">
-                                        @Html.TextBoxFor(model => model.HANTRA, new { @class = "form-control", @type = "date" })
-                                    </div>
+                                    Sách còn ở thư viện:
+                                    @item.SACH.SOLUONGTON
                                 </td>
                             </tr>
-                            @foreach (var item in chiTietMuonTra)
-                            {
-                                <tr>
-                                    <td>
-                                        Tên sách:
-                                        @item.TENSACH
-                                    </td>
-                                    <td>
-                                        Số lượng mượn:
-                                        @item.SOLUONGMUON
-                                    </td>
-                                    <td style="display:flex;justify-content:center;align-items:center;">
-                                        <img width="100" src="@Url.Content("~/assets/Admin/imgs/Product/"+item.SACH.HINHANH)" />
-                                    </td>
-                                    <td>
-                                        Sách còn ở thư viện:
-                                        @item.SACH.SOLUONGTON
-                                    </td>
-                                </tr>
-                            }
+                        }
 
-                        </tbody>
-                    </table>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Duyệt phiếu mượn" class="btn btn-primary" />
-                    </div>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Duyệt phiếu mượn" class="btn btn-primary" />
                 </div>
             </div>
-            }
         </div>
+    }
+</div>
+        

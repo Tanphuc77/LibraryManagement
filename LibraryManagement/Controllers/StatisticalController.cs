@@ -84,7 +84,7 @@ namespace LibraryManagement.Controllers
                             join chitiet in db.CHITIETMUONTRAs on muontra.MAMUON equals chitiet.MAMUON
                             join docgia in db.DOCGIAs on muontra.ID equals docgia.ID
                             join lop in db.LOPs on docgia.MALOP equals lop.MALOP
-                            where muontra.HANTRA > DateTime.Now // Lọc ra các đọc giả mượn sách quá hạn
+                            where muontra.HANTRA < DateTime.Now // Lọc ra các đọc giả mượn sách quá hạn
                             select new OutofdateBook
                             {
                                 HOTEN = docgia.HOTEN,
