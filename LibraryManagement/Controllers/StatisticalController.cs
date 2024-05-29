@@ -85,6 +85,8 @@ namespace LibraryManagement.Controllers
                             join docgia in db.DOCGIAs on muontra.ID equals docgia.ID
                             join lop in db.LOPs on docgia.MALOP equals lop.MALOP
                             where muontra.HANTRA < DateTime.Now // Lọc ra các đọc giả mượn sách quá hạn
+                                  && muontra.NGAYTRATHUCTE == null // Kiểm tra nếu ngày trả thực tế là null
+                                  && muontra.DAXOA == false // Kiểm tra nếu đã xóa là false
                             select new OutofdateBook
                             {
                                 HOTEN = docgia.HOTEN,
@@ -99,9 +101,9 @@ namespace LibraryManagement.Controllers
                 outofdateBooks = query.ToList();
             }
 
-            // Trả về view và truyền danh sách outofdateBooks vào view
             return View(outofdateBooks);
         }
+
         public ActionResult BorrowBooksMax10()
         {
             var borrowBook = db.SACHes.OrderByDescending(m => m.SOLUONGMUON).Take(10);
