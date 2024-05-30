@@ -1,6 +1,7 @@
 ﻿using LibraryManagement.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,18 +13,6 @@ namespace LibraryManagement.Controllers
     {
         QuanLyThuVienEntities db = new QuanLyThuVienEntities();
         // GET: Borrowbooks
-        [HttpGet]
-        public ActionResult CreateBorrowbook()
-        {
-            ViewBag.ID = new SelectList(db.DOCGIAs.OrderBy(m => m.HOTEN), "ID", "HOTEN");
-            ViewBag.MATHUTHU = new SelectList(db.THUTHUs.OrderBy(m => m.TENTHUTHU), "MATHUTHU", "TENTHUTHU");
-            return View();
-        }
-        [HttpPost]
-        public ActionResult CreateBorrowbook(MUONTRA model)
-        {
-            return View();
-        }
         public ActionResult ChuaDuyetSach()
         {
             var notApprovedBook = db.MUONTRAs.Where(m => m.TRANGTHAIMUON == false && m.DAXOA == false).OrderByDescending(m => m.NGAYMUON).ToList();
@@ -192,9 +181,67 @@ namespace LibraryManagement.Controllers
 
             return View(muonTra);
         }
+        [HttpGet]
         public ActionResult BorrowBooksDirectly()
         {
-            return View();
+            var model = new BorrowBooks
+            {
+                BorrowInfo = new MUONTRA(),
+                BorrowDetails = new List<CHITIETMUONTRA> { new CHITIETMUONTRA() } // Thêm chi tiết mượn ban đầu
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult BorrowBooksDirectly(BorrowBooks model)
+        {
+            if (ModelState.IsValid)
+            {
+                DOCGIA user = Session["TaiKhoan"] as DOCGIA;
+
+                THUTHU manager = Session["TaiKhoan"] as THUTHU;
+                if (manager != null)
+                {
+                    MUONTRA borrowBooks = new MUONTRA
+                    {
+                        ID = user.ID,
+                        MATHUTHU = manager.MATHUTHU,
+                        NGAYMUON = DateTime.Now,
+                        HANTRA = DateTime.Now,
+                        TRANGTHAIMUON = true,
+                        TRANGTHAITRA = false,
+                        DAXOA = false
+                    };
+
+                    db.MUONTRAs.Add(borrowBooks);
+                    db.SaveChanges();
+
+                    foreach (var item in model.BorrowDetails)
+                    {
+                        CHITIETMUONTRA detailBorrowBooks = new CHITIETMUONTRA
+                        {
+                            MAMUON = borrowBooks.MAMUON,
+                            MASACH = item.MASACH,
+                            TENSACH = item.TENSACH,
+                            SOLUONGMUON = item.SOLUONGMUON
+                        };
+                        db.CHITIETMUONTRAs.Add(detailBorrowBooks);
+
+                        var book = db.SACHes.FirstOrDefault(s => s.MASACH == item.MASACH);
+                        if (book != null)
+                        {
+                            book.SOLUONGMUON += item.SOLUONGMUON;
+                            db.Entry(book).State = EntityState.Modified;
+                        }
+                    }
+                    db.SaveChanges();
+
+                    return RedirectToAction("ChuaDuyetSach"); // Chuyển hướng đến trang hoặc action thành công
+                }
+            }
+
+            return View(model); // Trả lại view với thông báo validation nếu có
         }
     }
 }

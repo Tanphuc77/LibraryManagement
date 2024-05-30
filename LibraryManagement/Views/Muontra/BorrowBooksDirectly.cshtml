@@ -1,0 +1,84 @@
+﻿@model LibraryManagement.Models.BorrowBooks
+@using LibraryManagement.Models
+@{
+    ViewBag.Title = "Mượn Sách";
+    Layout = "~/Views/Layout/Admin.cshtml";
+    ViewBag.active = 2;
+}
+@Html.Partial("~/Views/Menu/MenuPartial.cshtml")
+<div class="main">
+
+    <div class="topbar">
+
+        <div class="toggle">
+            <ion-icon name="menu-outline"></ion-icon>
+        </div>
+        @using (Ajax.BeginForm("SearchResultsPartial", "Book", new AjaxOptions { @UpdateTargetId = "SearchAjax", InsertionMode = InsertionMode.Replace }))
+        {
+            <div class="search">
+                <label>
+                    <input type="text" name="keyWork" id="" placeholder="Nhập tên cần tìm...">
+                    <button class="fb-search_btn hm-searchbox-btn" value="Tìm Kiếm" type="submit"><ion-icon name="search-outline"></ion-icon></button>
+                </label>
+            </div>
+        }
+        <div class="user">
+            <span class="name__user" style="color:var(--blue)">
+                <ion-icon name="person-outline"></ion-icon>
+                @if (Session["TaiKhoan"] != null)
+                {
+                    THUTHU thuThu = (THUTHU)Session["TaiKhoan"];
+                    @thuThu.TENTHUTHU
+                }
+            </span>
+        </div>
+    </div>
+    @using (Html.BeginForm("BorrowBooksDirectly", "Muontra", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <div id="borrowDetails">
+                @for (int i = 0; i < Model.BorrowDetails.Count; i++)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BorrowDetails[i].MASACH, "Mã Sách")
+                        @Html.TextBoxFor(model => model.BorrowDetails[i].MASACH, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BorrowDetails[i].TENSACH, "Tên Sách")
+                        @Html.TextBoxFor(model => model.BorrowDetails[i].TENSACH, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BorrowDetails[i].SOLUONGMUON, "Số Lượng Mượn")
+                        @Html.TextBoxFor(model => model.BorrowDetails[i].SOLUONGMUON, new { @class = "form-control" })
+                    </div>
+                }
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BorrowInfo.ID, "Id đọc giả")
+                <div class="col-md-5">
+                    @Html.TextBoxFor(model => model.BorrowInfo.ID, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BorrowInfo.NGAYMUON, "Ngày Mượn")
+                <div class="col-md-5">
+                    @Html.TextBoxFor(model => model.BorrowInfo.NGAYMUON, new { @class = "form-control", type = "date", @value = DateTime.Now.ToString("yyyy-MM-dd") })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BorrowInfo.NGAYMUON, "Ngày trả")
+                <div class="col-md-5">
+                    @Html.TextBoxFor(model => model.BorrowInfo.HANTRA, new { @class = "form-control", type = "date", @value = DateTime.Now.ToString("yyyy-MM-dd") })
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Gửi</button>
+        </div>
+    }
+</div>
+
+

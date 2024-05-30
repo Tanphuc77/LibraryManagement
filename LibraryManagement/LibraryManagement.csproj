@@ -195,6 +195,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BookBorrowing.cs" />
+    <Compile Include="Models\BorrowBooks.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\CHITIETMUONTRA.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -795,6 +796,7 @@
     <Content Include="Views\Statistical\ViewBooksMax10.cshtml" />
     <Content Include="Views\Muontra\CreateBorrowbook.cshtml" />
     <Content Include="Views\Statistical\OutOfStockBooks10.cshtml" />
+    <Content Include="Views\Muontra\BorrowBooksDirectly.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
