@@ -198,14 +198,13 @@ namespace LibraryManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                DOCGIA user = Session["TaiKhoan"] as DOCGIA;
-
                 THUTHU manager = Session["TaiKhoan"] as THUTHU;
+
                 if (manager != null)
                 {
                     MUONTRA borrowBooks = new MUONTRA
                     {
-                        ID = user.ID,
+                        ID = model.BorrowInfo.ID,
                         MATHUTHU = manager.MATHUTHU,
                         NGAYMUON = DateTime.Now,
                         HANTRA = DateTime.Now,
